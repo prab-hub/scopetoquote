@@ -7,6 +7,11 @@ export const metadata: Metadata = {
   title: "ScopeToQuote — AI-Powered Estimating for Service Businesses",
   description:
     "Create accurate estimates in seconds using your own past work. ScopeToQuote uses AI to match new scopes to previous jobs, extract line items from documents, and export professional PDFs.",
+  applicationName: "ScopeToQuote",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
   openGraph: {
     title: "ScopeToQuote — AI-Powered Estimating for Service Businesses",
     description:
@@ -14,6 +19,7 @@ export const metadata: Metadata = {
     url: "https://live.scopetoquote.com",
     siteName: "ScopeToQuote",
     type: "website",
+    images: [{ url: "/logo.png", width: 1080, height: 1080, alt: "ScopeToQuote" }],
   },
 };
 

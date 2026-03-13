@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import {
   HiSparkles,
   HiArrowRight,
@@ -137,10 +138,8 @@ export default function ScopeToQuotePage() {
         <div style={container}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
             {/* Logo */}
-            <a href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}>
-              <div style={{ width: 32, height: 32, borderRadius: 8, backgroundColor: GREEN, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <HiSparkles style={{ width: 18, height: 18, color: "#fff" }} />
-              </div>
+            <a href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>
+              <Image src="/logo.png" alt="ScopeToQuote" width={36} height={36} style={{ borderRadius: 8 }} />
               <span style={{ color: "#fff", fontWeight: 700, fontSize: 18, letterSpacing: "-0.02em" }}>ScopeToQuote</span>
             </a>
 

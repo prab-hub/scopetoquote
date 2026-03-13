@@ -134,13 +134,12 @@ export default function ScopeToQuotePage() {
     <div style={{ minHeight: "100vh", backgroundColor: "#ffffff", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}>
 
       {/* Nav */}
-      <nav style={{ position: "sticky", top: 0, zIndex: 50, backgroundColor: "#111827", borderBottom: "1px solid #1f2937" }}>
+      <nav style={{ position: "sticky", top: 0, zIndex: 50, backgroundColor: "#0F1115", borderBottom: "1px solid #1f2937" }}>
         <div style={container}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
             {/* Logo */}
-            <a href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>
-              <Image src="/logo.png" alt="ScopeToQuote" width={36} height={36} style={{ borderRadius: 8 }} />
-              <span style={{ color: "#fff", fontWeight: 700, fontSize: 18, letterSpacing: "-0.02em" }}>ScopeToQuote</span>
+            <a href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center" }}>
+              <Image src="/logo.png" alt="ScopeToQuote" width={44} height={44} style={{ borderRadius: 8 }} />
             </a>
 
             {/* Desktop links */}
@@ -505,13 +504,11 @@ export default function ScopeToQuotePage() {
       </section>
 
       {/* Footer */}
-      <footer style={{ backgroundColor: "#111827", borderTop: "1px solid #1f2937", padding: "48px 0" }}>
+      <footer style={{ backgroundColor: "#0F1115", borderTop: "1px solid #1f2937", padding: "48px 0" }}>
         <div style={container}>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 24 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <div style={{ width: 28, height: 28, borderRadius: 8, backgroundColor: GREEN, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <HiSparkles style={{ width: 16, height: 16, color: "#fff" }} />
-              </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <Image src="/logo.png" alt="ScopeToQuote" width={32} height={32} style={{ borderRadius: 6 }} />
               <span style={{ color: "#fff", fontWeight: 700, fontSize: 15 }}>ScopeToQuote</span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 24, flexWrap: "wrap" }}>

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "ScopeToQuote — AI-Powered Estimating for Service Businesses",
@@ -22,7 +24,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-T0TEZSZ1DP"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-T0TEZSZ1DP');
+          `}
+        </Script>
+      </body>
     </html>
   );
 }

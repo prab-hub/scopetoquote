@@ -23,7 +23,8 @@ import {
 const GREEN = "#16A34A";
 const GREEN_LIGHT = "#DCFCE7";
 const GREEN_MUTED = "#BBF7D0";
-const SIGNUP_URL = "https://live.scopetoquote.com";
+const SIGNUP_URL = "https://live.scopetoquote.com/signup";
+const LOGIN_URL = "https://live.scopetoquote.com/login";
 
 const container: React.CSSProperties = {
   maxWidth: 1200,
@@ -151,13 +152,20 @@ export default function ScopeToQuotePage() {
             </div>
 
             {/* CTA */}
-            <a
-              href={SIGNUP_URL}
-              style={{ backgroundColor: GREEN, color: "#fff", padding: "8px 20px", borderRadius: 999, fontSize: 14, fontWeight: 600, textDecoration: "none" }}
-              className="desktop-nav"
-            >
-              Start Free
-            </a>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }} className="desktop-nav">
+              <a
+                href={LOGIN_URL}
+                style={{ color: "#9ca3af", fontSize: 14, fontWeight: 500, textDecoration: "none" }}
+              >
+                Log In
+              </a>
+              <a
+                href={SIGNUP_URL}
+                style={{ backgroundColor: GREEN, color: "#fff", padding: "8px 20px", borderRadius: 999, fontSize: 14, fontWeight: 600, textDecoration: "none" }}
+              >
+                Sign Up
+              </a>
+            </div>
 
             {/* Mobile toggle */}
             <button
@@ -176,7 +184,8 @@ export default function ScopeToQuotePage() {
               <a href="#features" onClick={() => setMobileMenuOpen(false)} style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }}>Features</a>
               <a href="#faq" onClick={() => setMobileMenuOpen(false)} style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }}>FAQ</a>
                 <a href="#pricing" onClick={() => setMobileMenuOpen(false)} style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }}>Pricing</a>
-              <a href={SIGNUP_URL} style={{ backgroundColor: GREEN, color: "#fff", padding: "8px 20px", borderRadius: 999, fontSize: 14, fontWeight: 600, textDecoration: "none", display: "inline-block", width: "fit-content" }}>Start Free</a>
+              <a href={LOGIN_URL} style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }} onClick={() => setMobileMenuOpen(false)}>Log In</a>
+              <a href={SIGNUP_URL} style={{ backgroundColor: GREEN, color: "#fff", padding: "8px 20px", borderRadius: 999, fontSize: 14, fontWeight: 600, textDecoration: "none", display: "inline-block", width: "fit-content" }} onClick={() => setMobileMenuOpen(false)}>Sign Up</a>
             </div>
           )}
         </div>

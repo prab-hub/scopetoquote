@@ -25,6 +25,7 @@ const GREEN_LIGHT = "#DCFCE7";
 const GREEN_MUTED = "#BBF7D0";
 const SIGNUP_URL = "https://live.scopetoquote.com/signup";
 const LOGIN_URL = "https://live.scopetoquote.com/login";
+const TRY_WIDGET_URL = "http://localhost:3000/try";
 
 const container: React.CSSProperties = {
   maxWidth: 1200,
@@ -147,6 +148,7 @@ export default function ScopeToQuotePage() {
             {/* Desktop links */}
             <div style={{ display: "flex", alignItems: "center", gap: 32 }} className="desktop-nav">
               <a href="#how-it-works" style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }}>How It Works</a>
+              <a href="#try-it" style={{ color: GREEN, fontSize: 14, fontWeight: 600, textDecoration: "none" }}>Try It Free</a>
               <a href="#features" style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }}>Features</a>
               <a href="#faq" style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }}>FAQ</a>
               <a href="#pricing" style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }}>Pricing</a>
@@ -182,6 +184,7 @@ export default function ScopeToQuotePage() {
           {mobileMenuOpen && (
             <div style={{ borderTop: "1px solid #1f2937", padding: "16px 0", display: "flex", flexDirection: "column", gap: 16 }}>
               <a href="#how-it-works" onClick={() => setMobileMenuOpen(false)} style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }}>How It Works</a>
+              <a href="#try-it" onClick={() => setMobileMenuOpen(false)} style={{ color: GREEN, fontSize: 14, fontWeight: 600, textDecoration: "none" }}>Try It Free</a>
               <a href="#features" onClick={() => setMobileMenuOpen(false)} style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }}>Features</a>
               <a href="#faq" onClick={() => setMobileMenuOpen(false)} style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }}>FAQ</a>
                 <a href="#pricing" onClick={() => setMobileMenuOpen(false)} style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }}>Pricing</a>
@@ -214,8 +217,8 @@ export default function ScopeToQuotePage() {
               <a href={SIGNUP_URL} style={{ backgroundColor: GREEN, color: "#fff", padding: "14px 32px", borderRadius: 999, fontSize: 15, fontWeight: 600, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 8 }}>
                 Start Free <HiArrowRight style={{ width: 16, height: 16 }} />
               </a>
-              <a href="#how-it-works" style={{ color: "#374151", border: "1px solid #d1d5db", padding: "14px 32px", borderRadius: 999, fontSize: 15, fontWeight: 500, textDecoration: "none" }}>
-                See how it works ↓
+              <a href="#try-it" style={{ color: "#374151", border: "1px solid #d1d5db", padding: "14px 32px", borderRadius: 999, fontSize: 15, fontWeight: 500, textDecoration: "none" }}>
+                Try it free — no signup ↓
               </a>
             </div>
           </div>
@@ -317,8 +320,44 @@ export default function ScopeToQuotePage() {
         </div>
       </section>
 
+      {/* Try It Widget */}
+      <section id="try-it" style={{ padding: "96px 0", backgroundColor: "#f9fafb" }}>
+        <div style={container}>
+          <div style={{ textAlign: "center", marginBottom: 48 }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, backgroundColor: GREEN_LIGHT, color: GREEN, padding: "6px 16px", borderRadius: 999, fontSize: 13, fontWeight: 600, marginBottom: 20 }}>
+              <HiSparkles style={{ width: 14, height: 14 }} />
+              No signup required
+            </div>
+            <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800, color: "#111827", letterSpacing: "-0.02em", marginBottom: 16 }}>
+              Try it right now.{" "}
+              <span style={{ color: GREEN }}>Paste your scope.</span>
+            </h2>
+            <p style={{ fontSize: "clamp(1rem, 2vw, 1.1rem)", color: "#6b7280", maxWidth: 520, margin: "0 auto" }}>
+              Drop in a project description below and see line items generated instantly. No account needed — save or download to keep your quote.
+            </p>
+          </div>
+
+          <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+            <iframe
+              src={TRY_WIDGET_URL}
+              width="100%"
+              height="720"
+              frameBorder="0"
+              allow="clipboard-write"
+              style={{ borderRadius: 16, boxShadow: "0 4px 40px rgba(0,0,0,0.10)", display: "block", border: "1px solid #e5e7eb" }}
+              loading="lazy"
+              title="ScopeToQuote — Generate a free estimate"
+            />
+          </div>
+
+          <p style={{ textAlign: "center", fontSize: 13, color: "#9ca3af", marginTop: 20 }}>
+            Generated quotes are rough estimates — sign up to train the AI on your real prices and past work.
+          </p>
+        </div>
+      </section>
+
       {/* AI Matching Feature */}
-      <section style={{ padding: "96px 0", backgroundColor: "#f9fafb" }}>
+      <section style={{ padding: "96px 0", backgroundColor: "#fff" }}>
         <div style={container}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 56, alignItems: "center" }}>
             <div>

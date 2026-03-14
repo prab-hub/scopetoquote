@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 
+const GREEN = "#16A34A";
+
 const container: React.CSSProperties = {
   maxWidth: 760,
   margin: "0 auto",

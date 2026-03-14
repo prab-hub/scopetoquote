@@ -522,7 +522,7 @@ export default function ScopeToQuotePage() {
               <span style={{ color: "#fff", fontWeight: 800, fontSize: 18, letterSpacing: "-0.03em", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}>ScopeToQuote</span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 24, flexWrap: "wrap" }}>
-              <span style={{ fontSize: 13, color: "#6b7280" }}>hello@scopetoquote.com</span>
+              <span style={{ fontSize: 13, color: "#6b7280" }}>prabhu@revexos.com</span>
               <a href="/privacy" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>Privacy Policy</a>
               <a href="/tos" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>Terms of Service</a>
             </div>

@@ -93,7 +93,7 @@ export default function TOSPage() {
             },
             {
               title: "12. Contact",
-              body: "Questions about these Terms? Email hello@scopetoquote.com.",
+              body: "Questions about these Terms? Email prabhu@revexos.com.",
             },
           ].map((section, i) => (
             <div key={i} style={{ marginBottom: 40 }}>

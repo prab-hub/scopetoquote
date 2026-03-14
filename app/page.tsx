@@ -139,8 +139,9 @@ export default function ScopeToQuotePage() {
         <div style={container}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
             {/* Logo */}
-            <a href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center" }}>
-              <Image src="/logo.png" alt="ScopeToQuote" width={44} height={44} style={{ borderRadius: 8 }} />
+            <a href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>
+              <Image src="/logo.png" alt="ScopeToQuote" width={52} height={52} style={{ borderRadius: 10 }} />
+              <span style={{ color: "#fff", fontWeight: 800, fontSize: 20, letterSpacing: "-0.03em", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}>ScopeToQuote</span>
             </a>
 
             {/* Desktop links */}
@@ -517,8 +518,8 @@ export default function ScopeToQuotePage() {
         <div style={container}>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 24 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <Image src="/logo.png" alt="ScopeToQuote" width={32} height={32} style={{ borderRadius: 6 }} />
-              <span style={{ color: "#fff", fontWeight: 700, fontSize: 15 }}>ScopeToQuote</span>
+              <Image src="/logo.png" alt="ScopeToQuote" width={48} height={48} style={{ borderRadius: 9 }} />
+              <span style={{ color: "#fff", fontWeight: 800, fontSize: 18, letterSpacing: "-0.03em", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}>ScopeToQuote</span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 24, flexWrap: "wrap" }}>
               <span style={{ fontSize: 13, color: "#6b7280" }}>hello@scopetoquote.com</span>

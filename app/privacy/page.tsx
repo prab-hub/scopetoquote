@@ -1,7 +1,5 @@
 import Link from "next/link";
-import { HiSparkles } from "react-icons/hi2";
-
-const GREEN = "#16A34A";
+import Image from "next/image";
 
 const container: React.CSSProperties = {
   maxWidth: 760,
@@ -17,11 +15,9 @@ export default function PrivacyPage() {
       <nav style={{ backgroundColor: "#111827", borderBottom: "1px solid #1f2937" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
           <div style={{ display: "flex", alignItems: "center", height: 64 }}>
-            <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}>
-              <div style={{ width: 32, height: 32, borderRadius: 8, backgroundColor: GREEN, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <HiSparkles style={{ width: 18, height: 18, color: "#fff" }} />
-              </div>
-              <span style={{ color: "#fff", fontWeight: 700, fontSize: 18, letterSpacing: "-0.02em" }}>ScopeToQuote</span>
+            <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>
+              <Image src="/logo.png" alt="ScopeToQuote" width={52} height={52} style={{ borderRadius: 10 }} />
+              <span style={{ color: "#fff", fontWeight: 800, fontSize: 20, letterSpacing: "-0.03em", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}>ScopeToQuote</span>
             </Link>
           </div>
         </div>

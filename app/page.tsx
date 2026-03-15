@@ -25,7 +25,7 @@ const GREEN_LIGHT = "#DCFCE7";
 const GREEN_MUTED = "#BBF7D0";
 const SIGNUP_URL = "https://live.scopetoquote.com/signup";
 const LOGIN_URL = "https://live.scopetoquote.com/login";
-const TRY_WIDGET_URL = "http://localhost:3000/try";
+const TRY_WIDGET_URL = process.env.NEXT_PUBLIC_TRY_WIDGET_URL ?? "http://localhost:3000/try";
 
 const container: React.CSSProperties = {
   maxWidth: 1200,

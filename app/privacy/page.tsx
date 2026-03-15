@@ -37,7 +37,7 @@ export default function PrivacyPage() {
           {[
             {
               title: "1. Who We Are",
-              body: "ScopeToQuote is an AI-powered estimating tool for contractors, agencies, and freelancers. References to \"we\", \"us\", or \"our\" mean ScopeToQuote. You can reach us at prabhu@revexos.com.",
+              body: "ScopeToQuote is an AI-powered estimating tool for contractors, agencies, and freelancers. References to \"we\", \"us\", or \"our\" mean ScopeToQuote. You can reach us at prabhu@scopetoquote.com.",
             },
             {
               title: "2. What We Collect",
@@ -75,7 +75,7 @@ export default function PrivacyPage() {
             },
             {
               title: "7. Your Rights",
-              body: "You can request a copy of your data, ask us to correct it, or ask us to delete your account and all associated data at any time. Email prabhu@revexos.com and we will respond within 30 days.",
+              body: "You can request a copy of your data, ask us to correct it, or ask us to delete your account and all associated data at any time. Email prabhu@scopetoquote.com and we will respond within 30 days.",
             },
             {
               title: "8. Data Retention",
@@ -91,7 +91,7 @@ export default function PrivacyPage() {
             },
             {
               title: "11. Contact",
-              body: "Questions? Email prabhu@revexos.com.",
+              body: "Questions? Email prabhu@scopetoquote.com.",
             },
           ].map((section, i) => (
             <div key={i} style={{ marginBottom: 40 }}>

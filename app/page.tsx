@@ -321,7 +321,7 @@ export default function ScopeToQuotePage() {
       </section>
 
       {/* Try It Widget */}
-      <section id="try-it" style={{ padding: "96px 0", backgroundColor: "#f9fafb" }}>
+      <section id="try-it" style={{ padding: "96px 0", backgroundColor: "#f9fafb", display: "none" }}>
         <div style={container}>
           <div style={{ textAlign: "center", marginBottom: 48 }}>
             <div style={{ display: "inline-flex", alignItems: "center", gap: 8, backgroundColor: GREEN_LIGHT, color: GREEN, padding: "6px 16px", borderRadius: 999, fontSize: 13, fontWeight: 600, marginBottom: 20 }}>

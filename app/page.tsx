@@ -217,9 +217,6 @@ export default function ScopeToQuotePage() {
               <a href={SIGNUP_URL} style={{ backgroundColor: GREEN, color: "#fff", padding: "14px 32px", borderRadius: 999, fontSize: 15, fontWeight: 600, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 8 }}>
                 Start Free <HiArrowRight style={{ width: 16, height: 16 }} />
               </a>
-              <a href="#try-it" style={{ color: "#374151", border: "1px solid #d1d5db", padding: "14px 32px", borderRadius: 999, fontSize: 15, fontWeight: 500, textDecoration: "none" }}>
-                Try it free, no signup ↓
-              </a>
             </div>
           </div>
 

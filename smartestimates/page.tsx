@@ -179,6 +179,7 @@ export default function SmartEstimatesPage() {
             <div className="hidden md:flex items-center gap-4">
               <a
                 href="https://smartestimates.revexos.com/signup"
+                rel="noopener noreferrer"
                 className="px-5 py-2 rounded-full text-sm font-medium text-white transition-all hover:opacity-90"
                 style={{ backgroundColor: accentBlue }}
               >
@@ -232,6 +233,7 @@ export default function SmartEstimatesPage() {
                 </a>
                 <a
                   href="https://smartestimates.revexos.com/signup"
+                  rel="noopener noreferrer"
                   className="px-5 py-2 rounded-full text-sm font-medium text-white transition-colors flex items-center justify-center gap-2 w-fit"
                   style={{ backgroundColor: accentBlue }}
                 >
@@ -286,6 +288,7 @@ export default function SmartEstimatesPage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
                 href="https://smartestimates.revexos.com/signup"
+                rel="noopener noreferrer"
                 className="px-8 py-4 rounded-full text-base font-medium text-white transition-all hover:scale-105 flex items-center gap-2"
                 style={{ backgroundColor: accentBlue }}
               >
@@ -868,6 +871,7 @@ export default function SmartEstimatesPage() {
             <div className="flex items-center justify-center">
               <a
                 href="https://smartestimates.revexos.com/signup"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-medium text-white transition-all hover:scale-105"
                 style={{ backgroundColor: accentBlue }}
               >

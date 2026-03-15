@@ -158,12 +158,14 @@ export default function ScopeToQuotePage() {
             <div style={{ display: "flex", alignItems: "center", gap: 12 }} className="desktop-nav">
               <a
                 href={LOGIN_URL}
+                rel="noopener noreferrer"
                 style={{ color: "#9ca3af", fontSize: 14, fontWeight: 500, textDecoration: "none" }}
               >
                 Log In
               </a>
               <a
                 href={SIGNUP_URL}
+                rel="noopener noreferrer"
                 style={{ backgroundColor: GREEN, color: "#fff", padding: "8px 20px", borderRadius: 999, fontSize: 14, fontWeight: 600, textDecoration: "none" }}
               >
                 Sign Up
@@ -188,8 +190,8 @@ export default function ScopeToQuotePage() {
               <a href="#features" onClick={() => setMobileMenuOpen(false)} style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }}>Features</a>
               <a href="#faq" onClick={() => setMobileMenuOpen(false)} style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }}>FAQ</a>
                 <a href="#pricing" onClick={() => setMobileMenuOpen(false)} style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }}>Pricing</a>
-              <a href={LOGIN_URL} style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }} onClick={() => setMobileMenuOpen(false)}>Log In</a>
-              <a href={SIGNUP_URL} style={{ backgroundColor: GREEN, color: "#fff", padding: "8px 20px", borderRadius: 999, fontSize: 14, fontWeight: 600, textDecoration: "none", display: "inline-block", width: "fit-content" }} onClick={() => setMobileMenuOpen(false)}>Sign Up</a>
+              <a href={LOGIN_URL} rel="noopener noreferrer" style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }} onClick={() => setMobileMenuOpen(false)}>Log In</a>
+              <a href={SIGNUP_URL} rel="noopener noreferrer" style={{ backgroundColor: GREEN, color: "#fff", padding: "8px 20px", borderRadius: 999, fontSize: 14, fontWeight: 600, textDecoration: "none", display: "inline-block", width: "fit-content" }} onClick={() => setMobileMenuOpen(false)}>Sign Up</a>
             </div>
           )}
         </div>
@@ -214,7 +216,7 @@ export default function ScopeToQuotePage() {
             </p>
 
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 16, flexWrap: "wrap" }}>
-              <a href={SIGNUP_URL} style={{ backgroundColor: GREEN, color: "#fff", padding: "14px 32px", borderRadius: 999, fontSize: 15, fontWeight: 600, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 8 }}>
+              <a href={SIGNUP_URL} rel="noopener noreferrer" style={{ backgroundColor: GREEN, color: "#fff", padding: "14px 32px", borderRadius: 999, fontSize: 15, fontWeight: 600, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 8 }}>
                 Start Free <HiArrowRight style={{ width: 16, height: 16 }} />
               </a>
             </div>
@@ -516,7 +518,7 @@ export default function ScopeToQuotePage() {
                 ))}
               </div>
 
-              <a href={SIGNUP_URL} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, backgroundColor: GREEN, color: "#fff", padding: "15px 0", borderRadius: 12, fontSize: 15, fontWeight: 700, textDecoration: "none", width: "100%" }}>
+              <a href={SIGNUP_URL} rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, backgroundColor: GREEN, color: "#fff", padding: "15px 0", borderRadius: 12, fontSize: 15, fontWeight: 700, textDecoration: "none", width: "100%" }}>
                 Get free access <HiArrowRight style={{ width: 16, height: 16 }} />
               </a>
               <p style={{ fontSize: 12, color: "#9ca3af", marginTop: 14 }}>No credit card required. Cancel anytime.</p>
@@ -542,7 +544,7 @@ export default function ScopeToQuotePage() {
             <p style={{ fontSize: 16, color: "#9ca3af", maxWidth: 480, margin: "0 auto 36px", lineHeight: 1.7 }}>
               ScopeToQuote is free to try. No credit card required. Start with your existing estimates and see how fast a new one comes together.
             </p>
-            <a href={SIGNUP_URL} style={{ display: "inline-flex", alignItems: "center", gap: 8, backgroundColor: GREEN, color: "#fff", padding: "14px 32px", borderRadius: 999, fontSize: 15, fontWeight: 600, textDecoration: "none" }}>
+            <a href={SIGNUP_URL} rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, backgroundColor: GREEN, color: "#fff", padding: "14px 32px", borderRadius: 999, fontSize: 15, fontWeight: 600, textDecoration: "none" }}>
               Start your free trial <HiArrowRight style={{ width: 16, height: 16 }} />
             </a>
           </div>

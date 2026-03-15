@@ -3,7 +3,7 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
 
-const TITLE = "ScopeToQuote — AI-Powered Estimating for Service Businesses";
+const TITLE = "ScopeToQuote: AI-Powered Estimating for Service Businesses";
 const DESCRIPTION =
   "Create accurate estimates in seconds using your own past work. ScopeToQuote uses AI to match new scopes to previous jobs, extract line items from documents, and export professional PDFs.";
 const SITE_URL = "https://scopetoquote.com";

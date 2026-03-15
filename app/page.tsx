@@ -42,7 +42,7 @@ export default function ScopeToQuotePage() {
       icon: HiDocumentText,
       title: "Drop in your scope",
       description:
-        "Paste a project description or upload the client's document — PDF, Word, CSV, whatever they sent you.",
+        "Paste a project description or upload the client's document: PDF, Word, CSV, whatever they sent you.",
     },
     {
       icon: HiMagnifyingGlass,
@@ -54,7 +54,7 @@ export default function ScopeToQuotePage() {
       icon: HiArrowDownTray,
       title: "Get a ready-to-send estimate",
       description:
-        "Review, adjust if needed, and export a polished PDF — with your logo, payment terms, and tax already applied.",
+        "Review, adjust if needed, and export a polished PDF with your logo, payment terms, and tax already applied.",
     },
   ];
 
@@ -63,13 +63,13 @@ export default function ScopeToQuotePage() {
       icon: HiSparkles,
       title: "AI Similarity Matching",
       description:
-        "Every estimate you save trains your personal estimating engine. Next time a similar scope comes in, ScopeToQuote pulls the closest matches and builds from them. Not generic AI — your prices, your line items, your way.",
+        "Every estimate you save trains your personal estimating engine. Next time a similar scope comes in, ScopeToQuote pulls the closest matches and builds from them. Not generic AI. Your prices, your line items, your way.",
     },
     {
       icon: HiDocumentText,
       title: "Import Any Document",
       description:
-        "Upload PDF, DOCX, DOC, TXT, CSV, or Markdown. ScopeToQuote extracts the scope, pulls out tasks and quantities, and maps them to line items — ready for review in seconds.",
+        "Upload PDF, DOCX, DOC, TXT, CSV, or Markdown. ScopeToQuote extracts the scope, pulls out tasks and quantities, and maps them to line items, ready for review in seconds.",
     },
     {
       icon: HiFolder,
@@ -99,13 +99,13 @@ export default function ScopeToQuotePage() {
       icon: HiReceiptPercent,
       title: "Tax Codes & Payment Terms",
       description:
-        "Set up your tax codes once — GST, VAT, sales tax. Attach standard payment terms at the org level or per estimate. It just works.",
+        "Set up your tax codes once: GST, VAT, sales tax. Attach standard payment terms at the org level or per estimate. It just works.",
     },
     {
       icon: HiShieldCheck,
       title: "Private & Secure",
       description:
-        "Your estimates are only used to generate suggestions for your own account — never shared across organizations. AES-256 at rest, TLS in transit.",
+        "Your estimates are only used to generate suggestions for your own account, never shared across organizations. AES-256 at rest, TLS in transit.",
     },
   ];
 
@@ -128,7 +128,7 @@ export default function ScopeToQuotePage() {
     },
     {
       q: "Is my data secure?",
-      a: "All data is encrypted at rest (AES-256) and in transit (TLS). File content is processed in memory only — uploaded documents are never stored in the database.",
+      a: "All data is encrypted at rest (AES-256) and in transit (TLS). File content is processed in memory only; uploaded documents are never stored in the database.",
     },
   ];
 
@@ -210,7 +210,7 @@ export default function ScopeToQuotePage() {
             </h1>
 
             <p style={{ fontSize: "clamp(1rem, 2vw, 1.2rem)", color: "#6b7280", lineHeight: 1.7, marginBottom: 40, maxWidth: 560, margin: "0 auto 40px" }}>
-              ScopeToQuote learns from your past work. Drop in a scope, get a fully-priced estimate in seconds — built from real jobs you&apos;ve actually done.
+              ScopeToQuote learns from your past work. Drop in a scope, get a fully-priced estimate in seconds, built from real jobs you&apos;ve actually done.
             </p>
 
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 16, flexWrap: "wrap" }}>
@@ -218,7 +218,7 @@ export default function ScopeToQuotePage() {
                 Start Free <HiArrowRight style={{ width: 16, height: 16 }} />
               </a>
               <a href="#try-it" style={{ color: "#374151", border: "1px solid #d1d5db", padding: "14px 32px", borderRadius: 999, fontSize: 15, fontWeight: 500, textDecoration: "none" }}>
-                Try it free — no signup ↓
+                Try it free, no signup ↓
               </a>
             </div>
           </div>
@@ -234,7 +234,7 @@ export default function ScopeToQuotePage() {
                 <span style={{ color: "#9ca3af", fontSize: 12, marginLeft: 8 }}>client_scope_final_v2.pdf</span>
               </div>
               <p style={{ fontSize: 14, fontWeight: 600, color: "#111827", marginBottom: 8 }}>Hey, here&apos;s the brief for the new project...</p>
-              <p style={{ fontSize: 13, color: "#6b7280", lineHeight: 1.6 }}>We need a full rebrand — logo, brand guidelines, website redesign (5-6 pages), social templates, and possibly a pitch deck. Timeline is tight, maybe 6 weeks? Budget TBD...</p>
+              <p style={{ fontSize: 13, color: "#6b7280", lineHeight: 1.6 }}>We need a full rebrand: logo, brand guidelines, website redesign (5-6 pages), social templates, and possibly a pitch deck. Timeline is tight, maybe 6 weeks? Budget TBD...</p>
               <div style={{ marginTop: 12, padding: 10, borderRadius: 8, backgroundColor: "#f9fafb", fontSize: 12, color: "#9ca3af" }}>[Attached: scope_notes_draft.docx, old_brief.pdf]</div>
             </div>
 
@@ -333,7 +333,7 @@ export default function ScopeToQuotePage() {
               <span style={{ color: GREEN }}>Paste your scope.</span>
             </h2>
             <p style={{ fontSize: "clamp(1rem, 2vw, 1.1rem)", color: "#6b7280", maxWidth: 520, margin: "0 auto" }}>
-              Drop in a project description below and see line items generated instantly. No account needed — save or download to keep your quote.
+              Drop in a project description below and see line items generated instantly. No account needed. Save or download to keep your quote.
             </p>
           </div>
 
@@ -346,12 +346,12 @@ export default function ScopeToQuotePage() {
               allow="clipboard-write"
               style={{ borderRadius: 16, boxShadow: "0 4px 40px rgba(0,0,0,0.10)", display: "block", border: "1px solid #e5e7eb" }}
               loading="lazy"
-              title="ScopeToQuote — Generate a free estimate"
+              title="ScopeToQuote: Generate a free estimate"
             />
           </div>
 
           <p style={{ textAlign: "center", fontSize: 13, color: "#9ca3af", marginTop: 20 }}>
-            Generated quotes are rough estimates — sign up to train the AI on your real prices and past work.
+            Generated quotes are rough estimates. Sign up to train the AI on your real prices and past work.
           </p>
         </div>
       </section>
@@ -385,9 +385,9 @@ export default function ScopeToQuotePage() {
                 <span style={{ backgroundColor: GREEN_LIGHT, color: GREEN, fontSize: 11, fontWeight: 600, padding: "4px 10px", borderRadius: 999 }}>3 found</span>
               </div>
               {[
-                { name: "Brand Redesign — Acme Co", match: 94, date: "Nov 2024" },
-                { name: "Full Rebrand — TechStart", match: 87, date: "Aug 2024" },
-                { name: "Identity System — Retail Co", match: 72, date: "Jun 2024" },
+                { name: "Brand Redesign for Acme Co", match: 94, date: "Nov 2024" },
+                { name: "Full Rebrand for TechStart", match: 87, date: "Aug 2024" },
+                { name: "Identity System for Retail Co", match: 72, date: "Jun 2024" },
               ].map((item, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 0", borderBottom: i < 2 ? "1px solid #f3f4f6" : "none" }}>
                   <div>
@@ -488,7 +488,7 @@ export default function ScopeToQuotePage() {
               {/* Beta badge */}
               <div style={{ position: "absolute", top: -14, left: "50%", transform: "translateX(-50%)" }}>
                 <span style={{ backgroundColor: GREEN, color: "#fff", fontSize: 12, fontWeight: 700, padding: "4px 16px", borderRadius: 999, letterSpacing: "0.05em", textTransform: "uppercase", whiteSpace: "nowrap" }}>
-                  Beta — Limited Spots
+                  Beta: Limited Spots
                 </span>
               </div>
 
@@ -526,7 +526,7 @@ export default function ScopeToQuotePage() {
             </div>
 
             <p style={{ textAlign: "center", fontSize: 13, color: "#9ca3af", marginTop: 24 }}>
-              Paid plans will be announced to beta users first — with a founder discount locked in.
+              Paid plans will be announced to beta users first, with a founder discount locked in.
             </p>
           </div>
         </div>

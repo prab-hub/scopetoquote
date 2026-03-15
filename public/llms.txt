@@ -1,0 +1,41 @@
+# ScopeToQuote
+
+ScopeToQuote is an AI-powered estimating tool for service businesses — contractors, agencies, and freelancers.
+
+## What It Does
+
+- Turns a project scope description or uploaded document into a fully-priced estimate in seconds
+- Learns from your own past estimates to suggest accurate line items and prices (not generic AI — your prices, your way)
+- Imports PDF, Word (.docx/.doc), plain text, Markdown, and CSV files to extract scope automatically
+- Exports professional PDFs with your logo, line items, tax codes, and payment terms applied
+
+## Who It's For
+
+Service businesses that write estimates: web agencies, design studios, construction contractors, IT consultants, freelancers, and any business that quotes jobs from scope documents.
+
+## Key Features
+
+- AI similarity matching against your own estimate history
+- Document import with OCR support for scanned PDFs
+- Services catalog with base prices, units, and billing types
+- Estimate versioning (every revision saved, no overwriting)
+- Professional PDF export
+- Contacts and light CRM (client billing address auto-fills)
+- Custom tax codes (GST, VAT, sales tax, etc.)
+- Payment terms at org or estimate level
+
+## Pricing
+
+Currently free during beta. No credit card required.
+
+## Privacy & Data
+
+User estimates are only used to generate suggestions for that user's own account. Data is never shared across organisations or used to train shared AI models. All data is encrypted at rest (AES-256) and in transit (TLS 1.2+).
+
+## Website
+
+https://scopetoquote.com
+
+## Contact
+
+prabhu@scopetoquote.com

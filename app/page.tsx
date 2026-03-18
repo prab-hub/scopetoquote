@@ -207,8 +207,8 @@ export default function ScopeToQuotePage() {
             </div>
 
             <h1 style={{ fontSize: "clamp(2.2rem, 5vw, 3.75rem)", fontWeight: 800, lineHeight: 1.1, letterSpacing: "-0.03em", color: "#111827", marginBottom: 24 }}>
-              Your next estimate is probably one{" "}
-              <span style={{ color: GREEN }}>you&apos;ve already written.</span>
+              Generate an estimate in a minute.{" "}
+              <span style={{ color: GREEN }}>Close one more client a month.</span>
             </h1>
 
             <p style={{ fontSize: "clamp(1rem, 2vw, 1.2rem)", color: "#6b7280", lineHeight: 1.7, marginBottom: 40, maxWidth: 560, margin: "0 auto 40px" }}>

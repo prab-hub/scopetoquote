@@ -4,465 +4,633 @@ import { useState } from "react";
 import Image from "next/image";
 import {
   HiSparkles,
-  HiArrowRight,
   HiBars3,
   HiXMark,
-  HiDocumentText,
-  HiDocumentDuplicate,
-  HiShieldCheck,
-  HiArrowDownTray,
-  HiUsers,
-  HiReceiptPercent,
-  HiMagnifyingGlass,
   HiChevronDown,
   HiChevronUp,
-  HiClock,
-  HiFolder,
 } from "react-icons/hi2";
 
-const GREEN = "#16A34A";
-const GREEN_LIGHT = "#DCFCE7";
-const GREEN_MUTED = "#BBF7D0";
+// ─── Design tokens (matches landing_page.html) ──────────────────────────────
+const BG       = "#0F1115";
+const BG2      = "#161a21";
+const BG3      = "#1d2330";
+const BORDER   = "#2a3040";
+const GREEN    = "#22c55e";
+const GREEN_DIM = "#16a34a";
+const GREEN_BG  = "rgba(34,197,94,0.08)";
+const GREEN_BG2 = "rgba(34,197,94,0.14)";
+const TEXT     = "#f0f4f8";
+const MUTED    = "#8b97a8";
+const MUTED2   = "#5a6478";
+const YELLOW   = "#facc15";
+const FONT     = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+const RADIUS   = 12;
+const RADIUS_LG = 20;
+
 const SIGNUP_URL = "https://live.scopetoquote.com/signup";
-const LOGIN_URL = "https://live.scopetoquote.com/login";
-const TRY_WIDGET_URL = process.env.NEXT_PUBLIC_TRY_WIDGET_URL ?? "http://localhost:3000/try";
+const LOGIN_URL  = "https://live.scopetoquote.com/login";
 
 const container: React.CSSProperties = {
-  maxWidth: 1200,
+  maxWidth: 1080,
   margin: "0 auto",
   padding: "0 24px",
 };
+const containerNarrow: React.CSSProperties = {
+  maxWidth: 720,
+  margin: "0 auto",
+  padding: "0 24px",
+};
+
+// ─── Tag pill ────────────────────────────────────────────────────────────────
+function Tag({ children }: { children: React.ReactNode }) {
+  return (
+    <span style={{
+      display: "inline-block",
+      fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase",
+      color: GREEN, background: GREEN_BG,
+      border: `1px solid rgba(34,197,94,0.25)`,
+      padding: "4px 12px", borderRadius: 999,
+      fontFamily: FONT,
+    }}>{children}</span>
+  );
+}
+
+// ─── Button ──────────────────────────────────────────────────────────────────
+function BtnPrimary({ href, children, lg }: { href: string; children: React.ReactNode; lg?: boolean }) {
+  return (
+    <a href={href} rel="noopener noreferrer" style={{
+      display: "inline-flex", alignItems: "center", gap: 8,
+      fontSize: lg ? 17 : 15, fontWeight: 600, borderRadius: 8,
+      padding: lg ? "16px 36px" : "13px 28px",
+      backgroundColor: GREEN, color: "#0a1a0f",
+      textDecoration: "none", whiteSpace: "nowrap", fontFamily: FONT,
+    }}>{children}</a>
+  );
+}
+function BtnGhost({ href, children, lg, onClick }: { href: string; children: React.ReactNode; lg?: boolean; onClick?: () => void }) {
+  return (
+    <a href={href} onClick={onClick} style={{
+      display: "inline-flex", alignItems: "center", gap: 8,
+      fontSize: lg ? 17 : 15, fontWeight: 600, borderRadius: 8,
+      padding: lg ? "16px 36px" : "13px 28px",
+      backgroundColor: "transparent", color: MUTED,
+      border: `1px solid ${BORDER}`,
+      textDecoration: "none", whiteSpace: "nowrap", fontFamily: FONT,
+    }}>{children}</a>
+  );
+}
+
+// ─── Check item ──────────────────────────────────────────────────────────────
+function CheckItem({ children }: { children: React.ReactNode }) {
+  return (
+    <div style={{ display: "flex", alignItems: "flex-start", gap: 12, fontSize: 14, fontFamily: FONT }}>
+      <div style={{
+        width: 20, height: 20, borderRadius: "50%", background: GREEN_BG,
+        border: `1px solid rgba(34,197,94,0.3)`,
+        display: "flex", alignItems: "center", justifyContent: "center",
+        flexShrink: 0, marginTop: 1, fontSize: 11, color: GREEN,
+      }}>✓</div>
+      <span style={{ color: MUTED }}>{children}</span>
+    </div>
+  );
+}
 
 export default function ScopeToQuotePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  const steps = [
-    {
-      icon: HiDocumentText,
-      title: "Drop in your scope",
-      description:
-        "Paste a project description or upload the client's document: PDF, Word, CSV, whatever they sent you.",
-    },
-    {
-      icon: HiMagnifyingGlass,
-      title: "ScopeToQuote finds your closest past work",
-      description:
-        "The AI scans your previous estimates for similar scopes, quantities, and line items. It surfaces the most relevant ones automatically.",
-    },
-    {
-      icon: HiArrowDownTray,
-      title: "Get a ready-to-send estimate",
-      description:
-        "Review, adjust if needed, and export a polished PDF with your logo, payment terms, and tax already applied.",
-    },
-  ];
-
-  const features = [
-    {
-      icon: HiSparkles,
-      title: "AI Similarity Matching",
-      description:
-        "Every estimate you save trains your personal estimating engine. Next time a similar scope comes in, ScopeToQuote pulls the closest matches and builds from them. Not generic AI. Your prices, your line items, your way.",
-    },
-    {
-      icon: HiDocumentText,
-      title: "Import Any Document",
-      description:
-        "Upload PDF, DOCX, DOC, TXT, CSV, or Markdown. ScopeToQuote extracts the scope, pulls out tasks and quantities, and maps them to line items, ready for review in seconds.",
-    },
-    {
-      icon: HiFolder,
-      title: "Your Services Catalog",
-      description:
-        "Build a catalog of your standard services with base prices, units, and billing types. When you create an estimate manually, your services are one click away.",
-    },
-    {
-      icon: HiDocumentDuplicate,
-      title: "Estimate Versioning",
-      description:
-        "Every revision is saved. Client wants to compare V1 and V3? You have both. No overwriting, no final_FINAL_v2 file names.",
-    },
-    {
-      icon: HiArrowDownTray,
-      title: "Professional PDF Export",
-      description:
-        "Clean PDF with your logo, line items broken out, tax applied, and payment terms stated. Looks like you spent an hour on it. You spent three minutes.",
-    },
-    {
-      icon: HiUsers,
-      title: "Contacts & CRM (Light)",
-      description:
-        "Keep a simple contact book. Attach a client to any estimate and their billing address pre-fills automatically. No separate CRM needed.",
-    },
-    {
-      icon: HiReceiptPercent,
-      title: "Tax Codes & Payment Terms",
-      description:
-        "Set up your tax codes once: GST, VAT, sales tax. Attach standard payment terms at the org level or per estimate. It just works.",
-    },
-    {
-      icon: HiShieldCheck,
-      title: "Private & Secure",
-      description:
-        "Your estimates are only used to generate suggestions for your own account, never shared across organizations. AES-256 at rest, TLS in transit.",
-    },
-  ];
-
   const faqs = [
     {
-      q: "Does it use my estimates to train a shared AI?",
-      a: "No. Your estimates are only used to generate suggestions for your own account. Nothing is shared across organizations.",
+      q: "I don't have many past estimates yet. Is this still useful?",
+      a: "Absolutely. During onboarding you can import or paste in 2–3 past estimates and the matching engine starts immediately. We also provide starter estimate libraries by industry (marketing, web dev, automation, IT) so Day 1 isn't a blank slate. The product improves as you add more estimates, but it's useful from the first scope you drop in.",
     },
     {
-      q: "What file types can I import?",
-      a: "PDF, Word (.docx, .doc), plain text (.txt), Markdown (.md), and CSV.",
+      q: "Every scope I get is different. Won't templates fail me?",
+      a: "ScopeToQuote doesn't match whole documents — it matches on components. A marketing agency always has strategy, content, distribution, and reporting as line items. A web dev scope always has design, build, and testing phases. The quantities and prices change; the structure repeats. The AI finds those repeating components and surfaces estimates where they appeared before. You're always reviewing and adjusting — it's a starting point, not a locked template.",
     },
     {
-      q: "Can I use my own tax rates?",
-      a: "Yes. You can create custom tax codes for any rate, in addition to the built-in system codes.",
+      q: "Does my data train a shared AI that others can access?",
+      a: "No. Your estimates are only used to generate suggestions for your own account. Nothing is shared or pooled across organizations. Your pricing, line items, and client scopes are private to your workspace. We use row-level security to enforce this at the database level.",
     },
     {
-      q: "What happens if my uploaded file is a scanned image?",
-      a: "ScopeToQuote uses OCR when a PDF is scanned and not machine-readable. Text-based PDFs are processed instantly.",
+      q: "What file types can I import for scope extraction?",
+      a: "PDF, Word (.docx, .doc), plain text (.txt), Markdown (.md), and CSV. Scanned PDFs are handled via OCR (AWS Textract) — text-based PDFs are processed instantly. If a client forwards you an email, paste the body directly into the scope field.",
+    },
+    {
+      q: "How does the match threshold work?",
+      a: "You can set how strict or flexible the matching is. \"Strict\" shows only highly similar estimates (great for repeatable, standardised scopes). \"Flexible\" casts a wider net and shows more options (useful when scopes vary). You can adjust this per estimate or set a default for your workspace.",
     },
     {
       q: "Is my data secure?",
-      a: "All data is encrypted at rest (AES-256) and in transit (TLS). File content is processed in memory only; uploaded documents are never stored in the database.",
+      a: "All data is encrypted at rest (AES-256) and in transit (TLS 1.3). Uploaded documents are processed in memory and never stored in the database — only the extracted line items are saved. Row-level security ensures your data is only accessible to your organization.",
+    },
+    {
+      q: "Can I cancel anytime?",
+      a: "Yes, from your dashboard with one click. No emails, no calls, no cancellation flow. Your estimates and data remain accessible on the free plan (up to 5/month) even after you cancel paid. We don't hold your work hostage.",
     },
   ];
 
   return (
-    <div style={{ minHeight: "100vh", backgroundColor: "#ffffff", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}>
+    <div style={{ minHeight: "100vh", backgroundColor: BG, fontFamily: FONT, color: TEXT, lineHeight: 1.65, fontSize: 16, WebkitFontSmoothing: "antialiased" }}>
 
-      {/* Nav */}
-      <nav style={{ position: "sticky", top: 0, zIndex: 50, backgroundColor: "#0F1115", borderBottom: "1px solid #1f2937" }}>
-        <div style={container}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
-            {/* Logo */}
-            <a href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>
-              <Image src="/logo.png" alt="ScopeToQuote" width={52} height={52} style={{ borderRadius: 10 }} />
-              <span style={{ color: "#fff", fontWeight: 800, fontSize: 20, letterSpacing: "-0.03em", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}>ScopeToQuote</span>
-            </a>
+      {/* ── NAV ──────────────────────────────────────────────────── */}
+      <nav style={{ position: "sticky", top: 0, zIndex: 100, background: "rgba(15,17,21,0.9)", backdropFilter: "blur(16px)", borderBottom: `1px solid ${BORDER}` }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 60, maxWidth: 1080, margin: "0 auto", padding: "0 24px" }}>
+          <a href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>
+            <Image src="/logo.png" alt="ScopeToQuote" width={52} height={52} style={{ borderRadius: 10 }} />
+            <span style={{ fontSize: 20, fontWeight: 800, letterSpacing: "-0.03em", color: "#fff", fontFamily: FONT }}>ScopeToQuote</span>
+          </a>
 
-            {/* Desktop links */}
-            <div style={{ display: "flex", alignItems: "center", gap: 32 }} className="desktop-nav">
-              <a href="#how-it-works" style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }}>How It Works</a>
-              <a href="#try-it" style={{ color: GREEN, fontSize: 14, fontWeight: 600, textDecoration: "none" }}>Try It Free</a>
-              <a href="#features" style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }}>Features</a>
-              <a href="#faq" style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }}>FAQ</a>
-              <a href="#pricing" style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }}>Pricing</a>
-            </div>
+          {/* Desktop nav */}
+          <ul className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 28, listStyle: "none" }}>
+            <li><a href="#how" style={{ fontSize: 14, fontWeight: 500, color: MUTED, textDecoration: "none" }}>How it works</a></li>
+            <li><a href="#features" style={{ fontSize: 14, fontWeight: 500, color: MUTED, textDecoration: "none" }}>Features</a></li>
+            <li><a href="#pricing" style={{ fontSize: 14, fontWeight: 500, color: MUTED, textDecoration: "none" }}>Pricing</a></li>
+            <li><a href="#faq" style={{ fontSize: 14, fontWeight: 500, color: MUTED, textDecoration: "none" }}>FAQ</a></li>
+          </ul>
 
-            {/* CTA */}
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }} className="desktop-nav">
-              <a
-                href={LOGIN_URL}
-                rel="noopener noreferrer"
-                style={{ color: "#9ca3af", fontSize: 14, fontWeight: 500, textDecoration: "none" }}
-              >
-                Log In
-              </a>
-              <a
-                href={SIGNUP_URL}
-                rel="noopener noreferrer"
-                style={{ backgroundColor: GREEN, color: "#fff", padding: "8px 20px", borderRadius: 999, fontSize: 14, fontWeight: 600, textDecoration: "none" }}
-              >
-                Sign Up
-              </a>
-            </div>
-
-            {/* Mobile toggle */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              style={{ background: "none", border: "none", cursor: "pointer", color: "#fff", padding: 4 }}
-              className="mobile-nav"
-            >
-              {mobileMenuOpen ? <HiXMark style={{ width: 24, height: 24 }} /> : <HiBars3 style={{ width: 24, height: 24 }} />}
-            </button>
+          <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <a href={LOGIN_URL} rel="noopener noreferrer" style={{ padding: "8px 20px", fontSize: 14, fontWeight: 600, color: MUTED, textDecoration: "none", background: "transparent", border: `1px solid ${BORDER}`, borderRadius: 8, fontFamily: FONT }}>Sign in</a>
+            <a href={SIGNUP_URL} rel="noopener noreferrer" style={{ padding: "8px 20px", fontSize: 14, fontWeight: 600, backgroundColor: GREEN, color: "#0a1a0f", textDecoration: "none", borderRadius: 8, fontFamily: FONT }}>Start free →</a>
           </div>
 
-          {/* Mobile menu */}
-          {mobileMenuOpen && (
-            <div style={{ borderTop: "1px solid #1f2937", padding: "16px 0", display: "flex", flexDirection: "column", gap: 16 }}>
-              <a href="#how-it-works" onClick={() => setMobileMenuOpen(false)} style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }}>How It Works</a>
-              <a href="#try-it" onClick={() => setMobileMenuOpen(false)} style={{ color: GREEN, fontSize: 14, fontWeight: 600, textDecoration: "none" }}>Try It Free</a>
-              <a href="#features" onClick={() => setMobileMenuOpen(false)} style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }}>Features</a>
-              <a href="#faq" onClick={() => setMobileMenuOpen(false)} style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }}>FAQ</a>
-                <a href="#pricing" onClick={() => setMobileMenuOpen(false)} style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }}>Pricing</a>
-              <a href={LOGIN_URL} rel="noopener noreferrer" style={{ color: "#9ca3af", fontSize: 14, textDecoration: "none" }} onClick={() => setMobileMenuOpen(false)}>Log In</a>
-              <a href={SIGNUP_URL} rel="noopener noreferrer" style={{ backgroundColor: GREEN, color: "#fff", padding: "8px 20px", borderRadius: 999, fontSize: 14, fontWeight: 600, textDecoration: "none", display: "inline-block", width: "fit-content" }} onClick={() => setMobileMenuOpen(false)}>Sign Up</a>
-            </div>
-          )}
+          {/* Mobile toggle */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="mobile-nav"
+            style={{ background: "none", border: "none", cursor: "pointer", color: TEXT, padding: 4 }}
+          >
+            {mobileMenuOpen ? <HiXMark style={{ width: 24, height: 24 }} /> : <HiBars3 style={{ width: 24, height: 24 }} />}
+          </button>
         </div>
+
+        {/* Mobile menu */}
+        {mobileMenuOpen && (
+          <div style={{ borderTop: `1px solid ${BORDER}`, padding: "16px 24px", display: "flex", flexDirection: "column", gap: 16, background: BG2 }}>
+            <a href="#how" onClick={() => setMobileMenuOpen(false)} style={{ color: MUTED, fontSize: 14, textDecoration: "none" }}>How it works</a>
+            <a href="#features" onClick={() => setMobileMenuOpen(false)} style={{ color: MUTED, fontSize: 14, textDecoration: "none" }}>Features</a>
+            <a href="#pricing" onClick={() => setMobileMenuOpen(false)} style={{ color: MUTED, fontSize: 14, textDecoration: "none" }}>Pricing</a>
+            <a href="#faq" onClick={() => setMobileMenuOpen(false)} style={{ color: MUTED, fontSize: 14, textDecoration: "none" }}>FAQ</a>
+            <a href={LOGIN_URL} rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)} style={{ color: MUTED, fontSize: 14, textDecoration: "none" }}>Sign in</a>
+            <a href={SIGNUP_URL} rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)} style={{ backgroundColor: GREEN, color: "#0a1a0f", fontSize: 14, fontWeight: 600, textDecoration: "none", padding: "8px 20px", borderRadius: 8, display: "inline-block", width: "fit-content" }}>Start free →</a>
+          </div>
+        )}
       </nav>
 
-      {/* Hero */}
-      <section style={{ padding: "80px 0 60px", backgroundColor: "#ffffff" }}>
+      {/* ── HERO ─────────────────────────────────────────────────── */}
+      <section id="hero" style={{ padding: "100px 0 80px", position: "relative", overflow: "hidden" }}>
+        {/* Glow */}
+        <div style={{ position: "absolute", top: -200, left: "50%", transform: "translateX(-50%)", width: 900, height: 600, background: "radial-gradient(ellipse at center, rgba(34,197,94,0.12) 0%, transparent 70%)", pointerEvents: "none" }} />
+
         <div style={container}>
-          <div style={{ textAlign: "center", maxWidth: 800, margin: "0 auto" }}>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, backgroundColor: GREEN_LIGHT, color: GREEN, padding: "6px 16px", borderRadius: 999, fontSize: 13, fontWeight: 600, marginBottom: 24 }}>
-              <HiSparkles style={{ width: 14, height: 14 }} />
-              Estimates built from your real past work
+          <div style={{ position: "relative", textAlign: "center" }}>
+            {/* Eyebrow */}
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13, color: MUTED, marginBottom: 24, background: BG2, border: `1px solid ${BORDER}`, padding: "6px 14px 6px 10px", borderRadius: 999 }}>
+              <span style={{ width: 6, height: 6, borderRadius: "50%", background: GREEN, flexShrink: 0, boxShadow: `0 0 8px ${GREEN}`, display: "inline-block" }} />
+              Built for B2B service agencies &amp; consultants
             </div>
 
-            <h1 style={{ fontSize: "clamp(2.2rem, 5vw, 3.75rem)", fontWeight: 800, lineHeight: 1.1, letterSpacing: "-0.03em", color: "#111827", marginBottom: 24 }}>
-              Generate an estimate in a minute.{" "}
-              <span style={{ color: GREEN }}>Close one more client a month.</span>
+            <h1 style={{ fontSize: "clamp(38px, 6vw, 68px)", fontWeight: 800, lineHeight: 1.08, letterSpacing: "-0.04em", marginBottom: 24, maxWidth: 820, marginLeft: "auto", marginRight: "auto" }}>
+              Quote in minutes.<br />
+              <em style={{ fontStyle: "normal", color: GREEN }}>Close one more a month.</em>
             </h1>
 
-            <p style={{ fontSize: "clamp(1rem, 2vw, 1.2rem)", color: "#6b7280", lineHeight: 1.7, marginBottom: 40, maxWidth: 560, margin: "0 auto 40px" }}>
-              ScopeToQuote learns from your past work. Drop in a scope, get a fully-priced estimate in seconds, built from real jobs you&apos;ve actually done.
+            <p style={{ fontSize: "clamp(16px, 2.2vw, 20px)", color: MUTED, lineHeight: 1.6, maxWidth: 560, margin: "0 auto 40px" }}>
+              Drop in a scope. ScopeToQuote matches it against your past work,
+              pulls the closest line items, and builds a ready-to-send estimate
+              in under 2 minutes — using your prices, not a generic template.
             </p>
 
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 16, flexWrap: "wrap" }}>
-              <a href={SIGNUP_URL} rel="noopener noreferrer" style={{ backgroundColor: GREEN, color: "#fff", padding: "14px 32px", borderRadius: 999, fontSize: 15, fontWeight: 600, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 8 }}>
-                Start Free <HiArrowRight style={{ width: 16, height: 16 }} />
-              </a>
-            </div>
-          </div>
-
-          {/* Hero cards */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 16, maxWidth: 900, margin: "56px auto 0", alignItems: "start" }}>
-            {/* Messy scope */}
-            <div style={{ border: "1px solid #e5e7eb", borderRadius: 20, padding: 24, backgroundColor: "#fff" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 16 }}>
-                <div style={{ width: 12, height: 12, borderRadius: "50%", backgroundColor: "#f87171" }} />
-                <div style={{ width: 12, height: 12, borderRadius: "50%", backgroundColor: "#fbbf24" }} />
-                <div style={{ width: 12, height: 12, borderRadius: "50%", backgroundColor: "#4ade80" }} />
-                <span style={{ color: "#9ca3af", fontSize: 12, marginLeft: 8 }}>client_scope_final_v2.pdf</span>
-              </div>
-              <p style={{ fontSize: 14, fontWeight: 600, color: "#111827", marginBottom: 8 }}>Hey, here&apos;s the brief for the new project...</p>
-              <p style={{ fontSize: 13, color: "#6b7280", lineHeight: 1.6 }}>We need a full rebrand: logo, brand guidelines, website redesign (5-6 pages), social templates, and possibly a pitch deck. Timeline is tight, maybe 6 weeks? Budget TBD...</p>
-              <div style={{ marginTop: 12, padding: 10, borderRadius: 8, backgroundColor: "#f9fafb", fontSize: 12, color: "#9ca3af" }}>[Attached: scope_notes_draft.docx, old_brief.pdf]</div>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, flexWrap: "wrap", marginBottom: 20 }}>
+              <BtnPrimary href={SIGNUP_URL} lg>Start free — no credit card</BtnPrimary>
+              <BtnGhost href="#how" lg>See how it works ↓</BtnGhost>
             </div>
 
-            {/* Clean estimate */}
-            <div style={{ border: `2px solid ${GREEN}`, borderRadius: 20, padding: 24, backgroundColor: "#fff" }}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
-                <span style={{ fontSize: 13, fontWeight: 700, color: "#111827" }}>EST-2024-047</span>
-                <span style={{ backgroundColor: GREEN_LIGHT, color: GREEN, fontSize: 11, fontWeight: 600, padding: "4px 10px", borderRadius: 999 }}>Ready to send</span>
-              </div>
-              {[
-                { item: "Brand Strategy & Positioning", price: "$2,400" },
-                { item: "Logo Design (3 concepts)", price: "$1,800" },
-                { item: "Brand Guidelines Doc", price: "$1,200" },
-                { item: "Website Redesign (6 pages)", price: "$5,400" },
-                { item: "Social Media Templates", price: "$900" },
-                { item: "Pitch Deck Design", price: "$1,600" },
-              ].map((line, i) => (
-                <div key={i} style={{ display: "flex", justifyContent: "space-between", fontSize: 13, padding: "7px 0", borderBottom: "1px solid #f3f4f6" }}>
-                  <span style={{ color: "#374151" }}>{line.item}</span>
-                  <span style={{ fontWeight: 600, color: GREEN }}>{line.price}</span>
+            <p style={{ fontSize: 13, color: MUTED2 }}>
+              <span style={{ color: MUTED }}>Free for up to 5 estimates/month.</span>&nbsp; Founding member pricing available — see below.
+            </p>
+
+            {/* Hero visual */}
+            <div style={{ margin: "56px auto 0", maxWidth: 860, display: "grid", gridTemplateColumns: "1fr 40px 1fr", gap: 0, alignItems: "center" }} className="hero-visual">
+              {/* Left: Raw scope */}
+              <div style={{ background: BG2, border: `1px solid ${BORDER}`, borderRadius: RADIUS_LG, overflow: "hidden" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", borderBottom: `1px solid ${BORDER}`, fontSize: 12, fontWeight: 600, color: MUTED, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                  <span>Client scope received</span>
+                  <div style={{ display: "flex", gap: 6 }}>
+                    <span style={{ width: 10, height: 10, borderRadius: "50%", backgroundColor: "#ef4444", display: "inline-block" }} />
+                    <span style={{ width: 10, height: 10, borderRadius: "50%", backgroundColor: "#f59e0b", display: "inline-block" }} />
+                    <span style={{ width: 10, height: 10, borderRadius: "50%", backgroundColor: "#22c55e", display: "inline-block" }} />
+                  </div>
                 </div>
-              ))}
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14, fontWeight: 700, paddingTop: 10, marginTop: 2 }}>
-                <span style={{ color: "#111827" }}>Total</span>
-                <span style={{ color: GREEN }}>$13,300</span>
+                <div style={{ padding: 20 }}>
+                  <div style={{ fontSize: 13, lineHeight: 1.7, color: MUTED, fontFamily: "'Courier New', monospace" }}>
+                    <strong style={{ color: TEXT }}>SCOPE 1: n8n Workflow Automation</strong><br />
+                    Setup &amp; Integration<br />
+                    ─────────────────────────<br /><br />
+                    Timeline: 4–6 weeks<br /><br />
+                    OVERVIEW<br />
+                    Client needs automation of<br />
+                    onboarding, CRM sync, and<br />
+                    invoice triggers via n8n...<br /><br />
+                    DELIVERABLES<br />
+                    - Cloud / self-hosted install<br />
+                    - Up to 10 workflows<br />
+                    - API connectors setup<br />
+                    - Error handling + logging<br />
+                    - Admin training session
+                  </div>
+                </div>
+              </div>
+
+              {/* Arrow */}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28, color: GREEN }}>→</div>
+
+              {/* Right: Generated estimate */}
+              <div style={{ background: BG2, border: `1px solid ${BORDER}`, borderRadius: RADIUS_LG, overflow: "hidden" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", borderBottom: `1px solid ${BORDER}`, fontSize: 12, fontWeight: 600, color: MUTED, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                  <span>Estimate generated</span>
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: 5, fontSize: 11, fontWeight: 700, background: "rgba(34,197,94,0.15)", color: GREEN, border: "1px solid rgba(34,197,94,0.3)", padding: "3px 10px", borderRadius: 999 }}>✦ 87% match</span>
+                </div>
+                <div style={{ padding: 20 }}>
+                  {[
+                    { desc: "n8n Cloud / Self-Hosted Install & Config", price: "$1,200" },
+                    { desc: "Workflow Design & Build (up to 10)", price: "$4,500" },
+                    { desc: "API Integration & Connector Setup", price: "$2,000" },
+                    { desc: "Error Handling & Activity Logging", price: "$800" },
+                    { desc: "Admin Training & Documentation", price: "$700" },
+                    { desc: "Monthly Retainer — Support", price: "$600/mo" },
+                  ].map((line, i) => (
+                    <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "9px 0", borderBottom: i < 5 ? `1px solid rgba(42,48,64,0.6)` : "none", fontSize: 13 }}>
+                      <span style={{ color: TEXT }}>{line.desc}</span>
+                      <span style={{ color: GREEN, fontWeight: 600, fontVariantNumeric: "tabular-nums" }}>{line.price}</span>
+                    </div>
+                  ))}
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 0 0", borderTop: `2px solid ${BORDER}`, marginTop: 8 }}>
+                    <span style={{ fontSize: 14, fontWeight: 700, color: TEXT }}>Total</span>
+                    <span style={{ fontSize: 22, fontWeight: 800, color: GREEN }}>$9,800</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Problem */}
-      <section style={{ backgroundColor: "#f9fafb", padding: "80px 0" }}>
+      {/* ── PROOF BAR ─────────────────────────────────────────────── */}
+      <div style={{ padding: "32px 0", background: BG2, borderTop: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}` }}>
         <div style={container}>
-          <div style={{ textAlign: "center", maxWidth: 720, margin: "0 auto" }}>
-            <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800, color: "#111827", marginBottom: 24, letterSpacing: "-0.02em" }}>The estimate grind is real.</h2>
-            <p style={{ fontSize: "clamp(1rem, 2vw, 1.1rem)", color: "#6b7280", lineHeight: 1.8, marginBottom: 16 }}>
-              Every new project starts the same way. Someone sends a vague scope. You dig through old spreadsheets, copy-paste from last quarter&apos;s quote, adjust numbers from memory, and hope you didn&apos;t miss anything.
-            </p>
-            <p style={{ fontSize: "clamp(1rem, 2vw, 1.1rem)", color: "#6b7280", lineHeight: 1.8 }}>
-              It takes an hour. You do it ten times a week.{" "}
-              <strong style={{ color: "#111827" }}>That&apos;s time you&apos;re not billing.</strong>
-            </p>
-            <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: 16, marginTop: 40 }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 16, flexWrap: "wrap" }}>
+            <span style={{ fontSize: 13, color: MUTED2 }}>Used by agencies across</span>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", justifyContent: "center" }}>
               {[
-                { icon: HiClock, label: "1 hour per estimate", red: false },
-                { icon: HiDocumentText, label: "10 estimates a week", red: false },
-                { icon: HiArrowRight, label: "= 10 hours not billed", red: true },
-              ].map(({ icon: Icon, label, red }, i) => (
-                <div key={i} style={{ display: "inline-flex", alignItems: "center", gap: 8, backgroundColor: "#fff", border: "1px solid #e5e7eb", borderRadius: 12, padding: "12px 20px" }}>
-                  <Icon style={{ width: 18, height: 18, color: red ? "#dc2626" : GREEN }} />
-                  <span style={{ fontSize: 14, fontWeight: 500, color: red ? "#dc2626" : "#111827" }}>{label}</span>
-                </div>
+                "🤖 Automation (n8n / Make / Zapier)",
+                "📣 Marketing & SEO",
+                "💻 Web & Software Dev",
+                "🎬 Video & Creative Production",
+                "📊 IT & Ops Consulting",
+              ].map((chip, i) => (
+                <span key={i} style={{ fontSize: 12, fontWeight: 600, color: MUTED, background: BG3, border: `1px solid ${BORDER}`, padding: "5px 14px", borderRadius: 999 }}>{chip}</span>
               ))}
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* How it works */}
-      <section id="how-it-works" style={{ padding: "96px 0", backgroundColor: "#fff" }}>
+      {/* ── STATS ────────────────────────────────────────────────── */}
+      <section style={{ padding: "80px 0" }}>
         <div style={container}>
-          <div style={{ textAlign: "center", marginBottom: 56 }}>
-            <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800, color: "#111827", letterSpacing: "-0.02em", marginBottom: 16 }}>
-              Three steps. <span style={{ color: GREEN }}>One estimate.</span>
-            </h2>
-            <p style={{ fontSize: "clamp(1rem, 2vw, 1.1rem)", color: "#6b7280", maxWidth: 480, margin: "0 auto" }}>
-              From messy scope to ready-to-send estimate in under 60 seconds.
-            </p>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 24 }}>
-            {steps.map((step, i) => (
-              <div key={i} style={{ border: "1px solid #e5e7eb", borderRadius: 20, padding: "32px 28px", textAlign: "center", backgroundColor: "#fff" }}>
-                <div style={{ width: 56, height: 56, borderRadius: "50%", backgroundColor: GREEN_LIGHT, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
-                  <step.icon style={{ width: 26, height: 26, color: GREEN }} />
-                </div>
-                <div style={{ fontSize: 12, fontWeight: 700, color: GREEN, letterSpacing: "0.05em", marginBottom: 8, textTransform: "uppercase" }}>Step {i + 1}</div>
-                <h3 style={{ fontSize: 17, fontWeight: 700, color: "#111827", marginBottom: 12 }}>{step.title}</h3>
-                <p style={{ fontSize: 14, color: "#6b7280", lineHeight: 1.7 }}>{step.description}</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 2, background: BORDER, borderRadius: RADIUS_LG, overflow: "hidden" }} className="stats-grid">
+            {[
+              { num: "10–40", label: "Hours lost per month", sub: "Average agency quoting overhead at 10–20 estimates/mo, 1–2 hrs each" },
+              { num: "43%", label: "Of won proposals close within 24 hrs", sub: "Speed kills competitors — agencies that quote same-day win more" },
+              { num: "<2 min", label: "With ScopeToQuote", sub: "From raw scope to priced, ready-to-send estimate PDF with your branding" },
+            ].map((stat, i) => (
+              <div key={i} style={{ background: BG2, padding: "40px 32px", textAlign: "center" }}>
+                <div style={{ fontSize: 52, fontWeight: 800, letterSpacing: "-0.04em", color: GREEN, lineHeight: 1, marginBottom: 8 }}>{stat.num}</div>
+                <div style={{ fontSize: 15, fontWeight: 600, color: TEXT, marginBottom: 6 }}>{stat.label}</div>
+                <div style={{ fontSize: 13, color: MUTED }}>{stat.sub}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Try It Widget */}
-      <section id="try-it" style={{ padding: "96px 0", backgroundColor: "#f9fafb", display: "none" }}>
+      <hr style={{ border: "none", borderTop: `1px solid ${BORDER}`, margin: 0 }} />
+
+      {/* ── PROBLEM ──────────────────────────────────────────────── */}
+      <section style={{ padding: "96px 0", background: BG2 }}>
         <div style={container}>
-          <div style={{ textAlign: "center", marginBottom: 48 }}>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, backgroundColor: GREEN_LIGHT, color: GREEN, padding: "6px 16px", borderRadius: 999, fontSize: 13, fontWeight: 600, marginBottom: 20 }}>
-              <HiSparkles style={{ width: 14, height: 14 }} />
-              No signup required
-            </div>
-            <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800, color: "#111827", letterSpacing: "-0.02em", marginBottom: 16 }}>
-              Try it right now.{" "}
-              <span style={{ color: GREEN }}>Paste your scope.</span>
-            </h2>
-            <p style={{ fontSize: "clamp(1rem, 2vw, 1.1rem)", color: "#6b7280", maxWidth: 520, margin: "0 auto" }}>
-              Drop in a project description below and see line items generated instantly. No account needed. Save or download to keep your quote.
-            </p>
-          </div>
-
-          <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-            <iframe
-              src={TRY_WIDGET_URL}
-              width="100%"
-              height="720"
-              frameBorder="0"
-              allow="clipboard-write"
-              style={{ borderRadius: 16, boxShadow: "0 4px 40px rgba(0,0,0,0.10)", display: "block", border: "1px solid #e5e7eb" }}
-              loading="lazy"
-              title="ScopeToQuote: Generate a free estimate"
-            />
-          </div>
-
-          <p style={{ textAlign: "center", fontSize: 13, color: "#9ca3af", marginTop: 20 }}>
-            Generated quotes are rough estimates. Sign up to train the AI on your real prices and past work.
-          </p>
-        </div>
-      </section>
-
-      {/* AI Matching Feature */}
-      <section style={{ padding: "96px 0", backgroundColor: "#fff" }}>
-        <div style={container}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 56, alignItems: "center" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "start" }} className="problem-grid">
             <div>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: 8, backgroundColor: GREEN_LIGHT, color: GREEN, padding: "6px 14px", borderRadius: 999, fontSize: 12, fontWeight: 700, marginBottom: 24 }}>
-                <HiSparkles style={{ width: 13, height: 13 }} /> Core Feature
-              </div>
-              <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800, color: "#111827", lineHeight: 1.15, letterSpacing: "-0.02em", marginBottom: 24 }}>
-                Your estimates. <span style={{ color: GREEN }}>Your engine.</span>
+              <Tag>The Problem</Tag>
+              <h2 style={{ marginTop: 16, fontSize: "clamp(26px, 3.5vw, 38px)", fontWeight: 700, lineHeight: 1.2, letterSpacing: "-0.02em", marginBottom: 20 }}>
+                The estimate grind<br />is bleeding your business.
               </h2>
-              <p style={{ fontSize: 16, color: "#6b7280", lineHeight: 1.75, marginBottom: 16 }}>
-                Every estimate you save trains your personal estimating engine. Next time a similar scope comes in, ScopeToQuote pulls the closest matches and builds from them.
-              </p>
-              <p style={{ fontSize: 16, color: "#6b7280", lineHeight: 1.75, marginBottom: 16 }}>
-                Not generic AI. Your prices. Your line items. Your way of structuring work.
-              </p>
-              <p style={{ fontSize: 16, color: "#6b7280", lineHeight: 1.75 }}>
-                You set the similarity threshold. Strict for exact matches. Loose when you want more options.{" "}
-                <strong style={{ color: "#111827" }}>You&apos;re always in control.</strong>
-              </p>
-            </div>
-
-            <div style={{ border: "1px solid #e5e7eb", borderRadius: 20, padding: 24, backgroundColor: "#fff" }}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
-                <span style={{ fontSize: 14, fontWeight: 700, color: "#111827" }}>Matching past estimates</span>
-                <span style={{ backgroundColor: GREEN_LIGHT, color: GREEN, fontSize: 11, fontWeight: 600, padding: "4px 10px", borderRadius: 999 }}>3 found</span>
+              <p style={{ color: MUTED, fontSize: 16, lineHeight: 1.75, marginBottom: 16 }}>Every new project starts the same way. A client sends a vague scope. You dig through Google Drive for last quarter's similar job. You copy-paste into a new doc, adjust numbers from memory, and hope you didn't miss a line item.</p>
+              <p style={{ color: MUTED, fontSize: 16, lineHeight: 1.75, marginBottom: 16 }}>It takes an hour. You do it ten times a week. That's time you're not billing — and money you can't see leaving.</p>
+              <div style={{ background: "linear-gradient(135deg, rgba(34,197,94,0.06) 0%, transparent 100%)", border: "1px solid rgba(34,197,94,0.2)", borderRadius: RADIUS, padding: "24px 28px", marginTop: 28 }}>
+                <strong style={{ display: "block", fontSize: 32, fontWeight: 800, color: GREEN, marginBottom: 4 }}>$1,000–$4,000</strong>
+                <span style={{ fontSize: 14, color: MUTED }}>Invisible monthly cost for a 10-person agency doing 15 estimates/month at $75/hr blended rate. You can't bill that time back.</span>
               </div>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               {[
-                { name: "Brand Redesign for Acme Co", match: 94, date: "Nov 2024" },
-                { name: "Full Rebrand for TechStart", match: 87, date: "Aug 2024" },
-                { name: "Identity System for Retail Co", match: 72, date: "Jun 2024" },
+                { icon: "⏳", title: "You rebuild the same estimate every time", desc: "Even when the scope is 90% identical to something you've quoted before, you start from scratch. There's no system that learns from your work." },
+                { icon: "⚠️", title: "Pricing drifts — and you don't notice", desc: "Without a reference point, you quote from memory. A job that cost $4,500 last year gets quoted at $3,800 this year. Margin erosion is invisible until it's catastrophic." },
+                { icon: "🐌", title: "Slow quotes lose deals", desc: "43% of won proposals are accepted within 24 hours of the client opening them. Every hour your quote sits unfinished is an hour a competitor can swoop in." },
+                { icon: "📋", title: "Your institutional pricing lives in your head", desc: "When you hire or hand off to a team member, your pricing logic doesn't transfer. Inconsistent quotes confuse clients and signal amateur operations." },
               ].map((item, i) => (
-                <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 0", borderBottom: i < 2 ? "1px solid #f3f4f6" : "none" }}>
+                <div key={i} style={{ background: BG3, border: `1px solid ${BORDER}`, borderRadius: RADIUS, padding: "20px 22px", display: "flex", gap: 16, alignItems: "flex-start" }}>
+                  <div style={{ width: 36, height: 36, borderRadius: 8, flexShrink: 0, background: "rgba(239,68,68,0.12)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>{item.icon}</div>
                   <div>
-                    <div style={{ fontSize: 13, fontWeight: 600, color: "#111827" }}>{item.name}</div>
-                    <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 2 }}>{item.date}</div>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                    <div style={{ width: 80, height: 6, borderRadius: 999, backgroundColor: "#f3f4f6", overflow: "hidden" }}>
-                      <div style={{ width: `${item.match}%`, height: "100%", borderRadius: 999, backgroundColor: item.match >= 90 ? GREEN : item.match >= 80 ? "#4ade80" : GREEN_MUTED }} />
-                    </div>
-                    <span style={{ fontSize: 13, fontWeight: 700, color: GREEN, minWidth: 36 }}>{item.match}%</span>
+                    <h4 style={{ fontSize: 14, fontWeight: 600, marginBottom: 4 }}>{item.title}</h4>
+                    <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.55 }}>{item.desc}</p>
                   </div>
                 </div>
               ))}
-              <button style={{ width: "100%", marginTop: 20, padding: "12px 0", borderRadius: 12, backgroundColor: GREEN, color: "#fff", fontSize: 14, fontWeight: 600, border: "none", cursor: "pointer" }}>
-                Build estimate from top match →
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── HOW IT WORKS ─────────────────────────────────────────── */}
+      <section id="how" style={{ padding: "96px 0", position: "relative", overflow: "hidden" }}>
+        <div style={container}>
+          <div style={{ textAlign: "center" }}>
+            <Tag>How It Works</Tag>
+            <h2 style={{ marginTop: 16, fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 700, lineHeight: 1.2, letterSpacing: "-0.02em", marginBottom: 16 }}>Three steps. Done in minutes.</h2>
+            <p style={{ fontSize: 18, color: MUTED, maxWidth: 560, margin: "0 auto" }}>No setup fees. No implementation. You'll have your first estimate in the time it takes to make a coffee.</p>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 2, background: BORDER, borderRadius: RADIUS_LG, overflow: "hidden", marginTop: 60 }} className="steps-grid">
+            {[
+              { num: "01", icon: "📄", title: "Drop in your scope", desc: "Paste a project description or upload whatever the client sent — PDF, Word doc, forwarded email, Notion page. ScopeToQuote extracts the deliverables and maps them to line items automatically." },
+              { num: "02", icon: "🤖", title: "AI finds your closest past work", desc: "Your estimate history trains a personal matching engine. For every new scope, the AI surfaces the most similar previous estimates — with a match score — so you're always building on real data, not gut feel." },
+              { num: "03", icon: "✅", title: "Review, adjust, send", desc: "Import the matched line items with one click. Adjust quantities and prices as needed. Apply tax, payment terms, and your branding — then export a professional PDF that looks like you spent an hour on it." },
+            ].map((step, i) => (
+              <div key={i} style={{ background: BG, padding: "40px 32px", position: "relative" }}>
+                <div style={{ fontSize: 52, fontWeight: 900, letterSpacing: "-0.04em", color: BORDER, marginBottom: 20, lineHeight: 1 }}>{step.num}</div>
+                <div style={{ width: 48, height: 48, borderRadius: 12, marginBottom: 18, background: GREEN_BG, border: "1px solid rgba(34,197,94,0.25)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22 }}>{step.icon}</div>
+                <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 10 }}>{step.title}</h3>
+                <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.65 }}>{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── AI MATCHING FEATURE ───────────────────────────────────── */}
+      <section style={{ padding: "96px 0", background: BG2 }}>
+        <div style={container}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }} className="feature-hero-grid">
+            <div>
+              <Tag>Core Feature</Tag>
+              <h2 style={{ marginTop: 16, fontSize: "clamp(26px, 3.5vw, 40px)", fontWeight: 700, lineHeight: 1.2, letterSpacing: "-0.02em", marginBottom: 16 }}>
+                Not generic AI.<br /><em style={{ fontStyle: "normal", color: GREEN }}>Your prices. Your logic.</em>
+              </h2>
+              <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.75, marginBottom: 16 }}>Every estimate you save builds your personal estimating engine. Next time a similar scope comes in — same industry, same deliverables, ballpark same size — ScopeToQuote surfaces the closest matches and pre-fills from them.</p>
+              <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.75, marginBottom: 16 }}>You set the match threshold. Strict for exact repeatable scopes. Flexible when you want more options. You're always in control of what gets imported.</p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10, margin: "24px 0" }}>
+                <CheckItem>Matches on deliverable components, not just keywords — so partial overlaps still surface useful references</CheckItem>
+                <CheckItem>Shows a percentage match score for every similar estimate so you know how confident to be</CheckItem>
+                <CheckItem>Gets smarter with every estimate you save — the more you use it, the better it performs</CheckItem>
+                <CheckItem>Your data never trains anyone else's model — your estimates are private to your account</CheckItem>
+              </div>
+            </div>
+
+            {/* Similar estimates widget */}
+            <div style={{ background: BG3, border: `1px solid ${BORDER}`, borderRadius: RADIUS_LG, padding: 20, overflow: "hidden" }}>
+              <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: MUTED2, marginBottom: 16 }}>Similar estimates found — 5 results</div>
+              {[
+                { name: "CB-0008 · Estimate1", scope: "SCOPE 1: n8n Workflow Automation – Setup & Integration", match: 87, items: 6, total: "$9,800", high: true },
+                { name: "CB-0004 · Scope1", scope: "SCOPE 1: Marketing Agency | Full Automation Build", match: 82, items: 8, total: "$14,700", high: true },
+                { name: "CB-0011 · Estimate1 v2", scope: "SCOPE 3: n8n HR & Employee Onboarding Workflows", match: 78, items: 6, total: "$12,800", high: false },
+              ].map((card, i) => (
+                <div key={i} style={{ background: BG2, border: `1px solid ${BORDER}`, borderRadius: RADIUS, padding: "14px 16px", marginBottom: 10, cursor: "pointer" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
+                    <span style={{ fontSize: 13, fontWeight: 600 }}>{card.name}</span>
+                    <span style={{ fontSize: 11, fontWeight: 700, padding: "2px 9px", borderRadius: 999, background: card.high ? "rgba(34,197,94,0.15)" : "rgba(234,179,8,0.15)", color: card.high ? GREEN : "#eab308" }}>{card.match}% match</span>
+                  </div>
+                  <div style={{ fontSize: 12, color: MUTED, marginBottom: 6 }}>{card.scope}</div>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: MUTED2 }}>
+                    <span>{card.items} items</span>
+                    <span>{card.total}</span>
+                  </div>
+                </div>
+              ))}
+              <button style={{ display: "block", width: "100%", marginTop: 16, background: GREEN, color: "#0a1a0f", border: "none", borderRadius: 8, padding: 10, fontSize: 14, fontWeight: 700, cursor: "pointer", textAlign: "center", fontFamily: FONT }}>
+                Use this estimate → Import all line items
               </button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Grid */}
-      <section id="features" style={{ padding: "96px 0", backgroundColor: "#fff" }}>
+      {/* ── FEATURE GRID ─────────────────────────────────────────── */}
+      <section id="features" style={{ padding: "96px 0" }}>
         <div style={container}>
-          <div style={{ textAlign: "center", marginBottom: 56 }}>
-            <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800, color: "#111827", letterSpacing: "-0.02em", marginBottom: 16 }}>
-              Everything you need. <span style={{ color: GREEN }}>Nothing you don&apos;t.</span>
-            </h2>
-            <p style={{ fontSize: "clamp(1rem, 2vw, 1.1rem)", color: "#6b7280", maxWidth: 480, margin: "0 auto" }}>
-              Built for contractors, agencies, and freelancers who write estimates every week.
-            </p>
+          <div style={{ textAlign: "center" }}>
+            <Tag>Everything Included</Tag>
+            <h2 style={{ marginTop: 16, fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 700, lineHeight: 1.2, letterSpacing: "-0.02em", marginBottom: 16 }}>Everything you need to quote faster.</h2>
+            <p style={{ fontSize: 18, color: MUTED, maxWidth: 560, margin: "0 auto 60px" }}>No add-ons. No integrations required to get started. Works out of the box.</p>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 20 }}>
-            {features.map((f, i) => (
-              <div key={i} style={{ border: "1px solid #e5e7eb", borderRadius: 20, padding: 24, backgroundColor: "#fff" }}>
-                <div style={{ width: 44, height: 44, borderRadius: 12, backgroundColor: GREEN_LIGHT, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16 }}>
-                  <f.icon style={{ width: 22, height: 22, color: GREEN }} />
-                </div>
-                <h3 style={{ fontSize: 15, fontWeight: 700, color: "#111827", marginBottom: 8 }}>{f.title}</h3>
-                <p style={{ fontSize: 13, color: "#6b7280", lineHeight: 1.65 }}>{f.description}</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }} className="features-grid">
+            {[
+              { icon: "📥", bg: "rgba(34,197,94,0.1)", title: "Import Any Document", desc: "PDF, DOCX, TXT, CSV, Markdown — upload whatever the client sent and get a parsed, structured scope in seconds. OCR supported for scanned documents." },
+              { icon: "🗂️", bg: "rgba(99,102,241,0.1)", title: "Services Catalog", desc: "Build a library of your standard services with base prices, units, and billing types. One click to add any service to an estimate — no more misremembering rates." },
+              { icon: "🔢", bg: "rgba(245,158,11,0.1)", title: "Estimate Versioning", desc: "Every revision is saved automatically. Client wants to compare V1 and V3? You have both. No more \"final_FINAL_v2\" filenames or overwritten docs." },
+              { icon: "🧾", bg: "rgba(236,72,153,0.1)", title: "Professional PDF Export", desc: "Every estimate exports as a clean PDF with your logo, company details, line items, tax, and payment terms. Looks like you spent an hour on it. You spent three minutes." },
+              { icon: "💰", bg: "rgba(6,182,212,0.1)", title: "Tax Codes & Payment Terms", desc: "Set up GST, VAT, sales tax, or any custom rate once. Attach standard payment terms at the org level or per estimate. Compliance without the headache." },
+              { icon: "👤", bg: "rgba(168,85,247,0.1)", title: "Contacts & Light CRM", desc: "Keep a simple contact book. Attach a client to any estimate and their billing details pre-fill automatically. No separate CRM subscription needed." },
+            ].map((card, i) => (
+              <div key={i} style={{ background: BG2, border: `1px solid ${BORDER}`, borderRadius: RADIUS_LG, padding: 28 }}>
+                <div style={{ width: 44, height: 44, borderRadius: 10, marginBottom: 16, background: card.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>{card.icon}</div>
+                <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 8 }}>{card.title}</h3>
+                <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.65 }}>{card.desc}</p>
               </div>
             ))}
           </div>
-          <div style={{ textAlign: "center", marginTop: 48 }}>
-            <p style={{ fontSize: 13, color: "#9ca3af", marginBottom: 16 }}>Import from any format your clients send</p>
-            <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: 10 }}>
-              {["PDF", "DOCX", "DOC", "TXT", "CSV", "Markdown"].map((fmt, i) => (
-                <span key={i} style={{ padding: "8px 18px", border: "1px solid #e5e7eb", borderRadius: 999, fontSize: 13, color: "#6b7280", backgroundColor: "#fff" }}>{fmt}</span>
-              ))}
+        </div>
+      </section>
+
+      {/* ── ROI CALCULATOR ───────────────────────────────────────── */}
+      <section style={{ padding: "96px 0", background: BG2 }}>
+        <div style={container}>
+          <div style={{ textAlign: "center" }}>
+            <Tag>The Math</Tag>
+            <h2 style={{ marginTop: 16, fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 700, lineHeight: 1.2, letterSpacing: "-0.02em", marginBottom: 16 }}>It pays for itself on the first estimate.</h2>
+            <p style={{ fontSize: 18, color: MUTED, maxWidth: 560, margin: "0 auto 60px" }}>Conservative numbers. Your actual savings are probably higher.</p>
+          </div>
+          <div style={{ background: BG3, border: "1px solid rgba(34,197,94,0.2)", borderRadius: RADIUS_LG, padding: 48, maxWidth: 720, margin: "0 auto" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40 }} className="roi-grid">
+              <div>
+                <h3 style={{ fontSize: 14, fontWeight: 600, color: MUTED, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 20 }}>Your current process</h3>
+                {[
+                  ["Estimates per month", "15"],
+                  ["Time per estimate (manual)", "90 min"],
+                  ["Time per estimate (ScopeToQuote)", "12 min"],
+                  ["Your hourly rate", "$75/hr"],
+                  ["ScopeToQuote cost", "$49/mo"],
+                ].map(([label, val], i, arr) => (
+                  <div key={i} style={{ display: "flex", justifyContent: "space-between", fontSize: 15, padding: "10px 0", borderBottom: i < arr.length - 1 ? `1px solid ${BORDER}` : "none" }}>
+                    <span style={{ color: MUTED }}>{label}</span>
+                    <strong style={{ color: TEXT }}>{val}</strong>
+                  </div>
+                ))}
+              </div>
+              <div>
+                <h3 style={{ fontSize: 14, fontWeight: 600, color: MUTED, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 20 }}>Your monthly ROI</h3>
+                {[
+                  ["Hours saved per month", "19.5 hrs"],
+                  ["Dollar value of time saved", "$1,462"],
+                  ["Tool cost", "− $49"],
+                ].map(([label, val], i) => (
+                  <div key={i} style={{ display: "flex", justifyContent: "space-between", fontSize: 15, padding: "10px 0", borderBottom: `1px solid ${BORDER}` }}>
+                    <span style={{ color: MUTED }}>{label}</span>
+                    <strong style={{ color: TEXT }}>{val}</strong>
+                  </div>
+                ))}
+                <div style={{ background: GREEN_BG, border: "1px solid rgba(34,197,94,0.25)", borderRadius: RADIUS, padding: "20px 24px", marginTop: 16, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: 15, fontWeight: 600 }}>Net monthly benefit</span>
+                  <span style={{ fontSize: 28, fontWeight: 800, color: GREEN }}>$1,413</span>
+                </div>
+                <p style={{ fontSize: 13, color: MUTED, marginTop: 10, textAlign: "center" }}>Payback period: <strong style={{ color: GREEN }}>first estimate of the month.</strong></p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section id="faq" style={{ padding: "96px 0", backgroundColor: "#fff" }}>
+      {/* ── PRICING ──────────────────────────────────────────────── */}
+      <section id="pricing" style={{ padding: "96px 0" }}>
         <div style={container}>
-          <div style={{ textAlign: "center", marginBottom: 48 }}>
-            <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800, color: "#111827", letterSpacing: "-0.02em" }}>Common questions</h2>
+          <div style={{ textAlign: "center" }}>
+            <Tag>Pricing</Tag>
+            <h2 style={{ marginTop: 16, fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 700, lineHeight: 1.2, letterSpacing: "-0.02em", marginBottom: 16 }}>Simple pricing. Cancels with one click.</h2>
+            <p style={{ fontSize: 18, color: MUTED, maxWidth: 560, margin: "0 auto 48px" }}>Start free. Upgrade when the ROI is obvious — which will be your second estimate.</p>
           </div>
-          <div style={{ maxWidth: 720, margin: "0 auto", display: "flex", flexDirection: "column", gap: 10 }}>
+
+          <div style={{ background: "linear-gradient(90deg, rgba(34,197,94,0.12), rgba(34,197,94,0.05))", border: "1px solid rgba(34,197,94,0.3)", borderRadius: RADIUS, padding: "14px 24px", textAlign: "center", marginBottom: 48, fontSize: 14, color: TEXT }}>
+            <strong style={{ color: GREEN }}>🎉 Founding Member Offer:</strong> Lock in Pro forever at $29/mo (normally $49). First 50 customers only.
+            <div style={{ fontSize: 13, color: MUTED, marginTop: 2 }}>41 of 50 spots remaining — closes when full, not on a date.</div>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }} className="pricing-grid">
+            {/* Free */}
+            <div style={{ background: BG3, border: `1px solid ${BORDER}`, borderRadius: RADIUS_LG, padding: 32, position: "relative" }}>
+              <div style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: MUTED, marginBottom: 16 }}>Free</div>
+              <div style={{ marginBottom: 8 }}>
+                <span style={{ fontSize: 48, fontWeight: 800, letterSpacing: "-0.04em", color: TEXT }}>$0</span>
+              </div>
+              <p style={{ fontSize: 14, color: MUTED, marginBottom: 28, lineHeight: 1.55 }}>Try the product with no commitment. No credit card needed. See the matching in action before you pay a cent.</p>
+              <a href={SIGNUP_URL} rel="noopener noreferrer" style={{ display: "block", width: "100%", textAlign: "center", padding: "13px 0", fontSize: 15, fontWeight: 600, background: "transparent", color: MUTED, border: `1px solid ${BORDER}`, borderRadius: 8, textDecoration: "none", marginBottom: 28, fontFamily: FONT }}>Get started free</a>
+              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
+                {["5 estimates per month", "AI similarity matching", "PDF export (with ScopeToQuote watermark)", "Services catalog (up to 10 items)"].map((item, i) => (
+                  <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, fontSize: 14 }}>
+                    <span style={{ color: GREEN, flexShrink: 0, marginTop: 1 }}>✓</span>
+                    <span style={{ color: MUTED }}>{item}</span>
+                  </li>
+                ))}
+                {["Branded PDF (your logo)", "Estimate versioning", "Tax codes & payment terms", "Team access"].map((item, i) => (
+                  <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, fontSize: 14 }}>
+                    <span style={{ color: MUTED2, flexShrink: 0, marginTop: 1 }}>✗</span>
+                    <span style={{ color: MUTED2 }}>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Pro / Founding */}
+            <div style={{ background: "linear-gradient(180deg, rgba(34,197,94,0.07) 0%, #1d2330 100%)", border: `1px solid ${GREEN}`, borderRadius: RADIUS_LG, padding: 32, position: "relative" }}>
+              <div style={{ position: "absolute", top: -12, left: "50%", transform: "translateX(-50%)", background: GREEN, color: "#0a1a0f", fontSize: 11, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", padding: "4px 14px", borderRadius: 999, whiteSpace: "nowrap" }}>Most Popular</div>
+              <div style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: MUTED, marginBottom: 16 }}>Pro</div>
+              <div style={{ marginBottom: 8 }}>
+                <span style={{ fontSize: 18, color: MUTED2, textDecoration: "line-through", marginRight: 4 }}>$49</span>
+                <span style={{ fontSize: 48, fontWeight: 800, letterSpacing: "-0.04em", color: TEXT }}>$29</span>
+                <span style={{ fontSize: 15, color: MUTED }}>/mo</span>
+                <div style={{ marginTop: 6 }}>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: GREEN, background: GREEN_BG, padding: "2px 8px", borderRadius: 999 }}>Founding member price — locked forever</span>
+                </div>
+              </div>
+              <p style={{ fontSize: 14, color: MUTED, marginBottom: 28, lineHeight: 1.55 }}>Everything you need to quote faster, look professional, and never rebuild an estimate from scratch again.</p>
+              <a href={SIGNUP_URL} rel="noopener noreferrer" style={{ display: "block", width: "100%", textAlign: "center", padding: "13px 0", fontSize: 15, fontWeight: 600, background: GREEN, color: "#0a1a0f", border: "none", borderRadius: 8, textDecoration: "none", marginBottom: 28, fontFamily: FONT }}>Claim founding price →</a>
+              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
+                {[
+                  "Unlimited estimates",
+                  "AI similarity matching (all thresholds)",
+                  "Branded PDF — your logo, no watermark",
+                  "Unlimited services catalog",
+                  "Estimate versioning & history",
+                  "Tax codes & payment terms",
+                  "Document import (PDF, DOCX, TXT, CSV)",
+                  "Contacts & light CRM",
+                ].map((item, i) => (
+                  <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, fontSize: 14 }}>
+                    <span style={{ color: GREEN, flexShrink: 0, marginTop: 1 }}>✓</span>
+                    <span style={{ color: MUTED }}>{item}</span>
+                  </li>
+                ))}
+                <li style={{ display: "flex", alignItems: "flex-start", gap: 10, fontSize: 14 }}>
+                  <span style={{ color: MUTED2, flexShrink: 0, marginTop: 1 }}>✗</span>
+                  <span style={{ color: MUTED2 }}>Team seats (Solo use)</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Agency */}
+            <div style={{ background: BG3, border: `1px solid ${BORDER}`, borderRadius: RADIUS_LG, padding: 32, position: "relative" }}>
+              <div style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: MUTED, marginBottom: 16 }}>Agency</div>
+              <div style={{ marginBottom: 8 }}>
+                <span style={{ fontSize: 48, fontWeight: 800, letterSpacing: "-0.04em", color: TEXT }}>$99</span>
+                <span style={{ fontSize: 15, color: MUTED }}>/mo</span>
+              </div>
+              <p style={{ fontSize: 14, color: MUTED, marginBottom: 28, lineHeight: 1.55 }}>For teams that quote together. Shared services catalog and estimate history means everyone quotes consistently at your rates.</p>
+              <a href={SIGNUP_URL} rel="noopener noreferrer" style={{ display: "block", width: "100%", textAlign: "center", padding: "13px 0", fontSize: 15, fontWeight: 600, background: "transparent", color: MUTED, border: `1px solid ${BORDER}`, borderRadius: 8, textDecoration: "none", marginBottom: 28, fontFamily: FONT }}>Start agency trial</a>
+              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
+                {[
+                  "Everything in Pro",
+                  "Up to 10 team members",
+                  "Shared services catalog across team",
+                  "Shared estimate history",
+                  "Team-level tax & payment defaults",
+                  "Priority support (email + chat)",
+                  "Onboarding call with founder",
+                  "Custom AI match threshold per user",
+                ].map((item, i) => (
+                  <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, fontSize: 14 }}>
+                    <span style={{ color: GREEN, flexShrink: 0, marginTop: 1 }}>✓</span>
+                    <span style={{ color: MUTED }}>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <p style={{ textAlign: "center", marginTop: 32, fontSize: 13, color: MUTED2 }}>All plans include unlimited estimate history. Cancel anytime from your dashboard — no emails required.</p>
+        </div>
+      </section>
+
+      {/* ── FAQ ──────────────────────────────────────────────────── */}
+      <section id="faq" style={{ padding: "96px 0", background: BG2 }}>
+        <div style={containerNarrow}>
+          <div style={{ textAlign: "center" }}>
+            <Tag>FAQ</Tag>
+            <h2 style={{ marginTop: 16, fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 700, lineHeight: 1.2, letterSpacing: "-0.02em", marginBottom: 56 }}>Questions we get asked.</h2>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
             {faqs.map((faq, i) => (
-              <div key={i} style={{ border: "1px solid #e5e7eb", borderRadius: 16, overflow: "hidden", backgroundColor: "#fff" }}>
+              <div key={i} style={{ background: BG, border: `1px solid ${BORDER}`, borderRadius: RADIUS, overflow: "hidden" }}>
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px 24px", background: "none", border: "none", cursor: "pointer", textAlign: "left" }}
+                  style={{ width: "100%", background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px 24px", fontSize: 15, fontWeight: 600, color: TEXT, textAlign: "left", gap: 16, fontFamily: FONT }}
                 >
-                  <span style={{ fontSize: 15, fontWeight: 600, color: "#111827" }}>{faq.q}</span>
+                  {faq.q}
                   {openFaq === i
-                    ? <HiChevronUp style={{ width: 18, height: 18, color: GREEN, flexShrink: 0, marginLeft: 16 }} />
-                    : <HiChevronDown style={{ width: 18, height: 18, color: "#9ca3af", flexShrink: 0, marginLeft: 16 }} />
+                    ? <HiChevronUp style={{ width: 18, height: 18, color: MUTED, flexShrink: 0 }} />
+                    : <HiChevronDown style={{ width: 18, height: 18, color: MUTED, flexShrink: 0 }} />
                   }
                 </button>
                 {openFaq === i && (
-                  <div style={{ padding: "0 24px 20px", fontSize: 14, color: "#6b7280", lineHeight: 1.7 }}>{faq.a}</div>
+                  <div style={{ padding: "0 24px 20px", fontSize: 14, color: MUTED, lineHeight: 1.7 }}>{faq.a}</div>
                 )}
               </div>
             ))}
@@ -470,94 +638,30 @@ export default function ScopeToQuotePage() {
         </div>
       </section>
 
-      {/* Pricing */}
-      <section id="pricing" style={{ padding: "96px 0", backgroundColor: "#f9fafb" }}>
+      {/* ── FINAL CTA ────────────────────────────────────────────── */}
+      <section style={{ padding: "100px 0", background: BG }}>
         <div style={container}>
-          <div style={{ textAlign: "center", marginBottom: 56 }}>
-            <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800, color: "#111827", letterSpacing: "-0.02em", marginBottom: 16 }}>
-              Simple pricing.
+          <div style={{ background: "linear-gradient(135deg, rgba(34,197,94,0.1) 0%, rgba(34,197,94,0.03) 100%)", border: "1px solid rgba(34,197,94,0.25)", borderRadius: 24, padding: "64px 48px", textAlign: "center", maxWidth: 680, margin: "0 auto" }}>
+            <h2 style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 800, lineHeight: 1.15, letterSpacing: "-0.03em", marginBottom: 16 }}>
+              Send your next quote<br /><em style={{ fontStyle: "normal", color: GREEN }}>before your competition does.</em>
             </h2>
-            <p style={{ fontSize: "clamp(1rem, 2vw, 1.1rem)", color: "#6b7280", maxWidth: 480, margin: "0 auto" }}>
-              No tiers, no credit card, no catch. We&apos;re in beta and it&apos;s completely free while we build with early users.
-            </p>
-          </div>
-
-          <div style={{ maxWidth: 480, margin: "0 auto" }}>
-            <div style={{ border: `2px solid ${GREEN}`, borderRadius: 24, padding: "40px 40px 36px", backgroundColor: "#fff", textAlign: "center", position: "relative" }}>
-              {/* Beta badge */}
-              <div style={{ position: "absolute", top: -14, left: "50%", transform: "translateX(-50%)" }}>
-                <span style={{ backgroundColor: GREEN, color: "#fff", fontSize: 12, fontWeight: 700, padding: "4px 16px", borderRadius: 999, letterSpacing: "0.05em", textTransform: "uppercase", whiteSpace: "nowrap" }}>
-                  Beta: Limited Spots
-                </span>
-              </div>
-
-              <div style={{ marginTop: 8, marginBottom: 4 }}>
-                <span style={{ fontSize: 64, fontWeight: 900, color: "#111827", letterSpacing: "-0.04em" }}>$0</span>
-                <span style={{ fontSize: 18, color: "#6b7280", fontWeight: 500 }}> / month</span>
-              </div>
-              <p style={{ fontSize: 14, color: "#9ca3af", marginBottom: 32 }}>Free while in beta. Paid plans announced before launch.</p>
-
-              <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 36, textAlign: "left" }}>
-                {[
-                  "Unlimited estimates",
-                  "AI similarity matching",
-                  "Import PDF, DOCX, CSV & more",
-                  "Professional PDF export",
-                  "Services catalog",
-                  "Estimate versioning",
-                  "Contacts & CRM",
-                  "Tax codes & payment terms",
-                  "Priority support during beta",
-                ].map((item, i) => (
-                  <div key={i} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                    <div style={{ width: 20, height: 20, borderRadius: "50%", backgroundColor: GREEN_LIGHT, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                      <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#16A34A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                    </div>
-                    <span style={{ fontSize: 14, color: "#374151" }}>{item}</span>
-                  </div>
-                ))}
-              </div>
-
-              <a href={SIGNUP_URL} rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, backgroundColor: GREEN, color: "#fff", padding: "15px 0", borderRadius: 12, fontSize: 15, fontWeight: 700, textDecoration: "none", width: "100%" }}>
-                Get free access <HiArrowRight style={{ width: 16, height: 16 }} />
-              </a>
-              <p style={{ fontSize: 12, color: "#9ca3af", marginTop: 14 }}>No credit card required. Cancel anytime.</p>
+            <p style={{ fontSize: 17, color: MUTED, marginBottom: 36 }}>Join agencies that have stopped rebuilding the same estimate from scratch every week. Your first 5 estimates are free — no credit card, no setup.</p>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, flexWrap: "wrap" }}>
+              <BtnPrimary href={SIGNUP_URL} lg>Start free now →</BtnPrimary>
+              <BtnGhost href="mailto:prabhu@scopetoquote.com" lg>Book a 15-min demo</BtnGhost>
             </div>
-
-            <p style={{ textAlign: "center", fontSize: 13, color: "#9ca3af", marginTop: 24 }}>
-              Paid plans will be announced to beta users first, with a founder discount locked in.
-            </p>
+            <p style={{ fontSize: 13, color: MUTED2, marginTop: 18 }}>Free tier available permanently · Founding member price ($29/mo) closes at 50 customers</p>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section style={{ padding: "80px 0", backgroundColor: "#fff" }}>
-        <div style={container}>
-          <div style={{ backgroundColor: "#111827", borderRadius: 28, padding: "64px 48px", textAlign: "center" }}>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, backgroundColor: "rgba(22,163,74,0.2)", color: "#86efac", padding: "6px 16px", borderRadius: 999, fontSize: 13, fontWeight: 600, marginBottom: 24 }}>
-              <HiSparkles style={{ width: 13, height: 13 }} /> Free to start
-            </div>
-            <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)", fontWeight: 800, color: "#fff", letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: 20 }}>
-              Stop re-writing estimates.<br />Start from where you left off.
-            </h2>
-            <p style={{ fontSize: 16, color: "#9ca3af", maxWidth: 480, margin: "0 auto 36px", lineHeight: 1.7 }}>
-              ScopeToQuote is free to try. No credit card required. Start with your existing estimates and see how fast a new one comes together.
-            </p>
-            <a href={SIGNUP_URL} rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, backgroundColor: GREEN, color: "#fff", padding: "14px 32px", borderRadius: 999, fontSize: 15, fontWeight: 600, textDecoration: "none" }}>
-              Start your free trial <HiArrowRight style={{ width: 16, height: 16 }} />
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer style={{ backgroundColor: "#0F1115", borderTop: "1px solid #1f2937", padding: "48px 0" }}>
+      {/* ── FOOTER ───────────────────────────────────────────────── */}
+      <footer style={{ backgroundColor: "#0F1115", borderTop: `1px solid #1f2937`, padding: "48px 0" }}>
         <div style={container}>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 24 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <Image src="/logo.png" alt="ScopeToQuote" width={48} height={48} style={{ borderRadius: 9 }} />
-              <span style={{ color: "#fff", fontWeight: 800, fontSize: 18, letterSpacing: "-0.03em", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}>ScopeToQuote</span>
+              <span style={{ color: "#fff", fontWeight: 800, fontSize: 18, letterSpacing: "-0.03em", fontFamily: FONT }}>ScopeToQuote</span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 24, flexWrap: "wrap" }}>
               <span style={{ fontSize: 13, color: "#6b7280" }}>prabhu@scopetoquote.com</span>
@@ -578,10 +682,7 @@ export default function ScopeToQuotePage() {
             mainEntity: faqs.map((faq) => ({
               "@type": "Question",
               name: faq.q,
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: faq.a,
-              },
+              acceptedAnswer: { "@type": "Answer", text: faq.a },
             })),
           }),
         }}
@@ -591,10 +692,18 @@ export default function ScopeToQuotePage() {
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
           .mobile-nav { display: block !important; }
+          .stats-grid, .steps-grid { grid-template-columns: 1fr !important; }
+          .problem-grid, .feature-hero-grid, .pricing-grid, .roi-grid { grid-template-columns: 1fr !important; }
+          .features-grid { grid-template-columns: 1fr 1fr !important; }
+          .hero-visual { grid-template-columns: 1fr !important; gap: 16px !important; }
         }
         @media (min-width: 769px) {
           .mobile-nav { display: none !important; }
         }
+        @media (max-width: 480px) {
+          .features-grid { grid-template-columns: 1fr !important; }
+        }
+        a:hover { opacity: 0.85; }
       `}</style>
     </div>
   );

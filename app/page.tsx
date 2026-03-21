@@ -202,7 +202,7 @@ export default function ScopeToQuotePage() {
             </p>
 
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, flexWrap: "wrap", marginBottom: 20 }}>
-              <BtnPrimary href="/signup" lg>Start for Free</BtnPrimary>
+              <BtnPrimary href={SIGNUP_URL} lg>Start for Free</BtnPrimary>
               <BtnGhost href="#how" lg>See how it works ↓</BtnGhost>
             </div>
 
@@ -516,7 +516,7 @@ export default function ScopeToQuotePage() {
                 <span style={{ fontSize: 48, fontWeight: 800, letterSpacing: "-0.04em", color: TEXT }}>$0</span>
               </div>
               <p style={{ fontSize: 14, color: MUTED, marginBottom: 28, lineHeight: 1.55 }}>Try the product with no commitment. No credit card needed. See the matching in action before you pay a cent.</p>
-              <a href="/signup" rel="noopener noreferrer" style={{ display: "block", width: "100%", textAlign: "center", padding: "13px 0", fontSize: 15, fontWeight: 600, background: "transparent", color: MUTED, border: `1px solid ${BORDER}`, borderRadius: 8, textDecoration: "none", marginBottom: 28, fontFamily: FONT }}>Get started free</a>
+              <a href={SIGNUP_URL} rel="noopener noreferrer" style={{ display: "block", width: "100%", textAlign: "center", padding: "13px 0", fontSize: 15, fontWeight: 600, background: "transparent", color: MUTED, border: `1px solid ${BORDER}`, borderRadius: 8, textDecoration: "none", marginBottom: 28, fontFamily: FONT }}>Get started free</a>
               <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
                 {["10 estimates per month", "AI similarity matching", "PDF export (with ScopeToQuote watermark)", "Services catalog (up to 10 items)", "Branded PDF (your logo)", "Estimate versioning"].map((item, i) => (
                   <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, fontSize: 14 }}>

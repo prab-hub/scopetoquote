@@ -67,9 +67,9 @@ function BtnPrimary({ href, children, lg }: { href: string; children: React.Reac
     }}>{children}</a>
   );
 }
-function BtnGhost({ href, children, lg, onClick }: { href: string; children: React.ReactNode; lg?: boolean; onClick?: () => void }) {
+function BtnGhost({ href, children, lg, onClick, target, rel }: { href: string; children: React.ReactNode; lg?: boolean; onClick?: () => void; target?: string; rel?: string }) {
   return (
-    <a href={href} onClick={onClick} style={{
+    <a href={href} onClick={onClick} target={target} rel={rel} style={{
       display: "inline-flex", alignItems: "center", gap: 8,
       fontSize: lg ? 17 : 15, fontWeight: 600, borderRadius: 8,
       padding: lg ? "16px 36px" : "13px 28px",
@@ -106,7 +106,7 @@ export default function ScopeToQuotePage() {
     },
     {
       q: "Every scope I get is different. Won't templates fail me?",
-      a: "ScopeToQuote doesn't match whole documents — it matches on components. A marketing agency always has strategy, content, distribution, and reporting as line items. A web dev scope always has design, build, and testing phases. The quantities and prices change; the structure repeats. The AI finds those repeating components and surfaces estimates where they appeared before. You're always reviewing and adjusting — it's a starting point, not a locked template.",
+      a: "ScopeToQuote doesn't match whole documents. It matches on components. A marketing agency always has strategy, content, distribution, and reporting as line items. A web dev scope always has design, build, and testing phases. The quantities and prices change; the structure repeats. The AI finds those repeating components and surfaces estimates where they appeared before. You're always reviewing and adjusting. It's a starting point, not a locked template.",
     },
     {
       q: "Does my data train a shared AI that others can access?",
@@ -114,7 +114,7 @@ export default function ScopeToQuotePage() {
     },
     {
       q: "What file types can I import for scope extraction?",
-      a: "PDF, Word (.docx, .doc), plain text (.txt), Markdown (.md), and CSV. Scanned PDFs are handled via OCR (AWS Textract) — text-based PDFs are processed instantly. If a client forwards you an email, paste the body directly into the scope field.",
+      a: "PDF, Word (.docx, .doc), plain text (.txt), Markdown (.md), and CSV. Scanned PDFs are handled via OCR (AWS Textract). Text-based PDFs are processed instantly. If a client forwards you an email, paste the body directly into the scope field.",
     },
     {
       q: "How does the match threshold work?",
@@ -122,7 +122,7 @@ export default function ScopeToQuotePage() {
     },
     {
       q: "Is my data secure?",
-      a: "All data is encrypted at rest (AES-256) and in transit (TLS 1.3). Uploaded documents are processed in memory and never stored in the database — only the extracted line items are saved. Row-level security ensures your data is only accessible to your organization.",
+      a: "All data is encrypted at rest (AES-256) and in transit (TLS 1.3). Uploaded documents are processed in memory and never stored in the database. Only the extracted line items are saved. Row-level security ensures your data is only accessible to your organization.",
     },
     {
       q: "Can I cancel anytime?",
@@ -198,29 +198,28 @@ export default function ScopeToQuotePage() {
             <p style={{ fontSize: "clamp(16px, 2.2vw, 20px)", color: MUTED, lineHeight: 1.6, maxWidth: 560, margin: "0 auto 40px" }}>
               Drop in a scope. ScopeToQuote matches it against your past work,
               pulls the closest line items, and builds a ready-to-send estimate
-              in under 2 minutes — using your prices, not a generic template.
+              in under 2 minutes, using your prices, not a generic template.
             </p>
 
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, flexWrap: "wrap", marginBottom: 20 }}>
-              <BtnPrimary href={SIGNUP_URL} lg>Start free — no credit card</BtnPrimary>
+              <BtnPrimary href="/signup" lg>Start for Free</BtnPrimary>
               <BtnGhost href="#how" lg>See how it works ↓</BtnGhost>
             </div>
 
             <p style={{ fontSize: 13, color: MUTED2 }}>
-              <span style={{ color: MUTED }}>Free for up to 5 estimates/month.</span>&nbsp; Founding member pricing available — see below.
             </p>
 
             {/* Hero visual */}
             <div style={{ margin: "56px auto 0", maxWidth: 860, display: "grid", gridTemplateColumns: "1fr 40px 1fr", gap: 0, alignItems: "center" }} className="hero-visual">
               {/* Left: Raw scope */}
               <div style={{ background: BG2, border: `1px solid ${BORDER}`, borderRadius: RADIUS_LG, overflow: "hidden" }}>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", borderBottom: `1px solid ${BORDER}`, fontSize: 12, fontWeight: 600, color: MUTED, textTransform: "uppercase", letterSpacing: "0.06em" }}>
-                  <span>Client scope received</span>
+                <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 16px", borderBottom: `1px solid ${BORDER}`, fontSize: 12, fontWeight: 600, color: MUTED, textTransform: "uppercase", letterSpacing: "0.06em" }}>
                   <div style={{ display: "flex", gap: 6 }}>
                     <span style={{ width: 10, height: 10, borderRadius: "50%", backgroundColor: "#ef4444", display: "inline-block" }} />
                     <span style={{ width: 10, height: 10, borderRadius: "50%", backgroundColor: "#f59e0b", display: "inline-block" }} />
                     <span style={{ width: 10, height: 10, borderRadius: "50%", backgroundColor: "#22c55e", display: "inline-block" }} />
                   </div>
+                  <span>Client scope received</span>
                 </div>
                 <div style={{ padding: 20 }}>
                   <div style={{ fontSize: 13, lineHeight: 1.7, color: MUTED, fontFamily: "'Courier New', monospace" }}>
@@ -258,7 +257,7 @@ export default function ScopeToQuotePage() {
                     { desc: "API Integration & Connector Setup", price: "$2,000" },
                     { desc: "Error Handling & Activity Logging", price: "$800" },
                     { desc: "Admin Training & Documentation", price: "$700" },
-                    { desc: "Monthly Retainer — Support", price: "$600/mo" },
+                    { desc: "Monthly Retainer: Support", price: "$600/mo" },
                   ].map((line, i) => (
                     <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "9px 0", borderBottom: i < 5 ? `1px solid rgba(42,48,64,0.6)` : "none", fontSize: 13 }}>
                       <span style={{ color: TEXT }}>{line.desc}</span>
@@ -302,7 +301,7 @@ export default function ScopeToQuotePage() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 2, background: BORDER, borderRadius: RADIUS_LG, overflow: "hidden" }} className="stats-grid">
             {[
               { num: "10–40", label: "Hours lost per month", sub: "Average agency quoting overhead at 10–20 estimates/mo, 1–2 hrs each" },
-              { num: "43%", label: "Of won proposals close within 24 hrs", sub: "Speed kills competitors — agencies that quote same-day win more" },
+              { num: "43%", label: "Of won proposals close within 24 hrs", sub: "Speed kills competitors. Agencies that quote same-day win more" },
               { num: "<2 min", label: "With ScopeToQuote", sub: "From raw scope to priced, ready-to-send estimate PDF with your branding" },
             ].map((stat, i) => (
               <div key={i} style={{ background: BG2, padding: "40px 32px", textAlign: "center" }}>
@@ -327,7 +326,7 @@ export default function ScopeToQuotePage() {
                 The estimate grind<br />is bleeding your business.
               </h2>
               <p style={{ color: MUTED, fontSize: 16, lineHeight: 1.75, marginBottom: 16 }}>Every new project starts the same way. A client sends a vague scope. You dig through Google Drive for last quarter's similar job. You copy-paste into a new doc, adjust numbers from memory, and hope you didn't miss a line item.</p>
-              <p style={{ color: MUTED, fontSize: 16, lineHeight: 1.75, marginBottom: 16 }}>It takes an hour. You do it ten times a week. That's time you're not billing — and money you can't see leaving.</p>
+              <p style={{ color: MUTED, fontSize: 16, lineHeight: 1.75, marginBottom: 16 }}>It takes an hour. You do it ten times a week. That's time you're not billing, and money you can't see leaving.</p>
               <div style={{ background: "linear-gradient(135deg, rgba(34,197,94,0.06) 0%, transparent 100%)", border: "1px solid rgba(34,197,94,0.2)", borderRadius: RADIUS, padding: "24px 28px", marginTop: 28 }}>
                 <strong style={{ display: "block", fontSize: 32, fontWeight: 800, color: GREEN, marginBottom: 4 }}>$1,000–$4,000</strong>
                 <span style={{ fontSize: 14, color: MUTED }}>Invisible monthly cost for a 10-person agency doing 15 estimates/month at $75/hr blended rate. You can't bill that time back.</span>
@@ -336,7 +335,7 @@ export default function ScopeToQuotePage() {
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               {[
                 { icon: "⏳", title: "You rebuild the same estimate every time", desc: "Even when the scope is 90% identical to something you've quoted before, you start from scratch. There's no system that learns from your work." },
-                { icon: "⚠️", title: "Pricing drifts — and you don't notice", desc: "Without a reference point, you quote from memory. A job that cost $4,500 last year gets quoted at $3,800 this year. Margin erosion is invisible until it's catastrophic." },
+                { icon: "⚠️", title: "Pricing drifts and you don't notice", desc: "Without a reference point, you quote from memory. A job that cost $4,500 last year gets quoted at $3,800 this year. Margin erosion is invisible until it's catastrophic." },
                 { icon: "🐌", title: "Slow quotes lose deals", desc: "43% of won proposals are accepted within 24 hours of the client opening them. Every hour your quote sits unfinished is an hour a competitor can swoop in." },
                 { icon: "📋", title: "Your institutional pricing lives in your head", desc: "When you hire or hand off to a team member, your pricing logic doesn't transfer. Inconsistent quotes confuse clients and signal amateur operations." },
               ].map((item, i) => (
@@ -363,9 +362,9 @@ export default function ScopeToQuotePage() {
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 2, background: BORDER, borderRadius: RADIUS_LG, overflow: "hidden", marginTop: 60 }} className="steps-grid">
             {[
-              { num: "01", icon: "📄", title: "Drop in your scope", desc: "Paste a project description or upload whatever the client sent — PDF, Word doc, forwarded email, Notion page. ScopeToQuote extracts the deliverables and maps them to line items automatically." },
-              { num: "02", icon: "🤖", title: "AI finds your closest past work", desc: "Your estimate history trains a personal matching engine. For every new scope, the AI surfaces the most similar previous estimates — with a match score — so you're always building on real data, not gut feel." },
-              { num: "03", icon: "✅", title: "Review, adjust, send", desc: "Import the matched line items with one click. Adjust quantities and prices as needed. Apply tax, payment terms, and your branding — then export a professional PDF that looks like you spent an hour on it." },
+              { num: "01", icon: "📄", title: "Drop in your scope", desc: "Paste a project description or upload whatever the client sent: PDF, Word doc, forwarded email, Notion page. ScopeToQuote extracts the deliverables and maps them to line items automatically." },
+              { num: "02", icon: "🤖", title: "AI finds your closest past work", desc: "Your estimate history trains a personal matching engine. For every new scope, the AI surfaces the most similar previous estimates with a match score, so you're always building on real data, not gut feel." },
+              { num: "03", icon: "✅", title: "Review, adjust, send", desc: "Import the matched line items with one click. Adjust quantities and prices as needed. Apply tax, payment terms, and your branding, then export a professional PDF that looks like you spent an hour on it." },
             ].map((step, i) => (
               <div key={i} style={{ background: BG, padding: "40px 32px", position: "relative" }}>
                 <div style={{ fontSize: 52, fontWeight: 900, letterSpacing: "-0.04em", color: BORDER, marginBottom: 20, lineHeight: 1 }}>{step.num}</div>
@@ -387,19 +386,19 @@ export default function ScopeToQuotePage() {
               <h2 style={{ marginTop: 16, fontSize: "clamp(26px, 3.5vw, 40px)", fontWeight: 700, lineHeight: 1.2, letterSpacing: "-0.02em", marginBottom: 16 }}>
                 Not generic AI.<br /><em style={{ fontStyle: "normal", color: GREEN }}>Your prices. Your logic.</em>
               </h2>
-              <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.75, marginBottom: 16 }}>Every estimate you save builds your personal estimating engine. Next time a similar scope comes in — same industry, same deliverables, ballpark same size — ScopeToQuote surfaces the closest matches and pre-fills from them.</p>
+              <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.75, marginBottom: 16 }}>Every estimate you save builds your personal estimating engine. Next time a similar scope comes in, same industry, same deliverables, ballpark same size, ScopeToQuote surfaces the closest matches and pre-fills from them.</p>
               <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.75, marginBottom: 16 }}>You set the match threshold. Strict for exact repeatable scopes. Flexible when you want more options. You're always in control of what gets imported.</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 10, margin: "24px 0" }}>
-                <CheckItem>Matches on deliverable components, not just keywords — so partial overlaps still surface useful references</CheckItem>
+                <CheckItem>Matches on deliverable components, not just keywords. Partial overlaps still surface useful references</CheckItem>
                 <CheckItem>Shows a percentage match score for every similar estimate so you know how confident to be</CheckItem>
-                <CheckItem>Gets smarter with every estimate you save — the more you use it, the better it performs</CheckItem>
-                <CheckItem>Your data never trains anyone else's model — your estimates are private to your account</CheckItem>
+                <CheckItem>Gets smarter with every estimate you save. The more you use it, the better it performs</CheckItem>
+                <CheckItem>Your data never trains anyone else's model. Your estimates are private to your account</CheckItem>
               </div>
             </div>
 
             {/* Similar estimates widget */}
             <div style={{ background: BG3, border: `1px solid ${BORDER}`, borderRadius: RADIUS_LG, padding: 20, overflow: "hidden" }}>
-              <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: MUTED2, marginBottom: 16 }}>Similar estimates found — 5 results</div>
+              <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: MUTED2, marginBottom: 16 }}>Similar estimates found: 5 results</div>
               {[
                 { name: "CB-0008 · Estimate1", scope: "SCOPE 1: n8n Workflow Automation – Setup & Integration", match: 87, items: 6, total: "$9,800", high: true },
                 { name: "CB-0004 · Scope1", scope: "SCOPE 1: Marketing Agency | Full Automation Build", match: 82, items: 8, total: "$14,700", high: true },
@@ -435,12 +434,11 @@ export default function ScopeToQuotePage() {
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }} className="features-grid">
             {[
-              { icon: "📥", bg: "rgba(34,197,94,0.1)", title: "Import Any Document", desc: "PDF, DOCX, TXT, CSV, Markdown — upload whatever the client sent and get a parsed, structured scope in seconds. OCR supported for scanned documents." },
-              { icon: "🗂️", bg: "rgba(99,102,241,0.1)", title: "Services Catalog", desc: "Build a library of your standard services with base prices, units, and billing types. One click to add any service to an estimate — no more misremembering rates." },
+              { icon: "📥", bg: "rgba(34,197,94,0.1)", title: "Import Any Document", desc: "PDF, DOCX, TXT, CSV, Markdown. Upload whatever the client sent and get a parsed, structured scope in seconds. OCR supported for scanned documents." },
+              { icon: "🗂️", bg: "rgba(99,102,241,0.1)", title: "Services Catalog", desc: "Build a library of your standard services with base prices, units, and billing types. One click to add any service to an estimate. No more misremembering rates." },
               { icon: "🔢", bg: "rgba(245,158,11,0.1)", title: "Estimate Versioning", desc: "Every revision is saved automatically. Client wants to compare V1 and V3? You have both. No more \"final_FINAL_v2\" filenames or overwritten docs." },
               { icon: "🧾", bg: "rgba(236,72,153,0.1)", title: "Professional PDF Export", desc: "Every estimate exports as a clean PDF with your logo, company details, line items, tax, and payment terms. Looks like you spent an hour on it. You spent three minutes." },
               { icon: "💰", bg: "rgba(6,182,212,0.1)", title: "Tax Codes & Payment Terms", desc: "Set up GST, VAT, sales tax, or any custom rate once. Attach standard payment terms at the org level or per estimate. Compliance without the headache." },
-              { icon: "👤", bg: "rgba(168,85,247,0.1)", title: "Contacts & Light CRM", desc: "Keep a simple contact book. Attach a client to any estimate and their billing details pre-fill automatically. No separate CRM subscription needed." },
             ].map((card, i) => (
               <div key={i} style={{ background: BG2, border: `1px solid ${BORDER}`, borderRadius: RADIUS_LG, padding: 28 }}>
                 <div style={{ width: 44, height: 44, borderRadius: 10, marginBottom: 16, background: card.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>{card.icon}</div>
@@ -506,13 +504,9 @@ export default function ScopeToQuotePage() {
           <div style={{ textAlign: "center" }}>
             <Tag>Pricing</Tag>
             <h2 style={{ marginTop: 16, fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 700, lineHeight: 1.2, letterSpacing: "-0.02em", marginBottom: 16 }}>Simple pricing. Cancels with one click.</h2>
-            <p style={{ fontSize: 18, color: MUTED, maxWidth: 560, margin: "0 auto 48px" }}>Start free. Upgrade when the ROI is obvious — which will be your second estimate.</p>
+            <p style={{ fontSize: 18, color: MUTED, maxWidth: 560, margin: "0 auto 48px" }}>Start free. Upgrade when the ROI is obvious. That will be your second estimate.</p>
           </div>
 
-          <div style={{ background: "linear-gradient(90deg, rgba(34,197,94,0.12), rgba(34,197,94,0.05))", border: "1px solid rgba(34,197,94,0.3)", borderRadius: RADIUS, padding: "14px 24px", textAlign: "center", marginBottom: 48, fontSize: 14, color: TEXT }}>
-            <strong style={{ color: GREEN }}>🎉 Founding Member Offer:</strong> Lock in Pro forever at $29/mo (normally $49). First 50 customers only.
-            <div style={{ fontSize: 13, color: MUTED, marginTop: 2 }}>41 of 50 spots remaining — closes when full, not on a date.</div>
-          </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }} className="pricing-grid">
             {/* Free */}
@@ -522,20 +516,22 @@ export default function ScopeToQuotePage() {
                 <span style={{ fontSize: 48, fontWeight: 800, letterSpacing: "-0.04em", color: TEXT }}>$0</span>
               </div>
               <p style={{ fontSize: 14, color: MUTED, marginBottom: 28, lineHeight: 1.55 }}>Try the product with no commitment. No credit card needed. See the matching in action before you pay a cent.</p>
-              <a href={SIGNUP_URL} rel="noopener noreferrer" style={{ display: "block", width: "100%", textAlign: "center", padding: "13px 0", fontSize: 15, fontWeight: 600, background: "transparent", color: MUTED, border: `1px solid ${BORDER}`, borderRadius: 8, textDecoration: "none", marginBottom: 28, fontFamily: FONT }}>Get started free</a>
+              <a href="/signup" rel="noopener noreferrer" style={{ display: "block", width: "100%", textAlign: "center", padding: "13px 0", fontSize: 15, fontWeight: 600, background: "transparent", color: MUTED, border: `1px solid ${BORDER}`, borderRadius: 8, textDecoration: "none", marginBottom: 28, fontFamily: FONT }}>Get started free</a>
               <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
-                {["5 estimates per month", "AI similarity matching", "PDF export (with ScopeToQuote watermark)", "Services catalog (up to 10 items)"].map((item, i) => (
+                {["10 estimates per month", "AI similarity matching", "PDF export (with ScopeToQuote watermark)", "Services catalog (up to 10 items)", "Branded PDF (your logo)", "Estimate versioning"].map((item, i) => (
                   <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, fontSize: 14 }}>
                     <span style={{ color: GREEN, flexShrink: 0, marginTop: 1 }}>✓</span>
                     <span style={{ color: MUTED }}>{item}</span>
                   </li>
                 ))}
-                {["Branded PDF (your logo)", "Estimate versioning", "Tax codes & payment terms", "Team access"].map((item, i) => (
-                  <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, fontSize: 14 }}>
-                    <span style={{ color: MUTED2, flexShrink: 0, marginTop: 1 }}>✗</span>
-                    <span style={{ color: MUTED2 }}>{item}</span>
-                  </li>
-                ))}
+                <li style={{ display: "flex", alignItems: "flex-start", gap: 10, fontSize: 14 }}>
+                  <span style={{ color: MUTED2, flexShrink: 0, marginTop: 1 }}>✓</span>
+                  <span style={{ color: MUTED2 }}>Limited tax codes &amp; payment terms</span>
+                </li>
+                <li style={{ display: "flex", alignItems: "flex-start", gap: 10, fontSize: 14 }}>
+                  <span style={{ color: MUTED2, flexShrink: 0, marginTop: 1 }}>✗</span>
+                  <span style={{ color: MUTED2 }}>Team support</span>
+                </li>
               </ul>
             </div>
 
@@ -548,21 +544,20 @@ export default function ScopeToQuotePage() {
                 <span style={{ fontSize: 48, fontWeight: 800, letterSpacing: "-0.04em", color: TEXT }}>$29</span>
                 <span style={{ fontSize: 15, color: MUTED }}>/mo</span>
                 <div style={{ marginTop: 6 }}>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: GREEN, background: GREEN_BG, padding: "2px 8px", borderRadius: 999 }}>Founding member price — locked forever</span>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: GREEN, background: GREEN_BG, padding: "2px 8px", borderRadius: 999 }}>Founding member price, locked forever</span>
                 </div>
               </div>
               <p style={{ fontSize: 14, color: MUTED, marginBottom: 28, lineHeight: 1.55 }}>Everything you need to quote faster, look professional, and never rebuild an estimate from scratch again.</p>
-              <a href={SIGNUP_URL} rel="noopener noreferrer" style={{ display: "block", width: "100%", textAlign: "center", padding: "13px 0", fontSize: 15, fontWeight: 600, background: GREEN, color: "#0a1a0f", border: "none", borderRadius: 8, textDecoration: "none", marginBottom: 28, fontFamily: FONT }}>Claim founding price →</a>
+              <a href="https://live.scopetoquote.com/signup?next=/api/subscriptions/pro-checkout" rel="noopener noreferrer" style={{ display: "block", width: "100%", textAlign: "center", padding: "13px 0", fontSize: 15, fontWeight: 600, background: GREEN, color: "#0a1a0f", border: "none", borderRadius: 8, textDecoration: "none", marginBottom: 8, fontFamily: FONT }}>Claim founding price →</a>
+              <p style={{ textAlign: "center", fontSize: 12, color: MUTED2, marginBottom: 28 }}>7-day free trial</p>
               <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
                 {[
-                  "Unlimited estimates",
+                  "Unlimited estimates per month",
                   "AI similarity matching (all thresholds)",
-                  "Branded PDF — your logo, no watermark",
+                  "Branded PDF, your logo, no watermark",
                   "Unlimited services catalog",
                   "Estimate versioning & history",
                   "Tax codes & payment terms",
-                  "Document import (PDF, DOCX, TXT, CSV)",
-                  "Contacts & light CRM",
                 ].map((item, i) => (
                   <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, fontSize: 14 }}>
                     <span style={{ color: GREEN, flexShrink: 0, marginTop: 1 }}>✓</span>
@@ -584,11 +579,11 @@ export default function ScopeToQuotePage() {
                 <span style={{ fontSize: 15, color: MUTED }}>/mo</span>
               </div>
               <p style={{ fontSize: 14, color: MUTED, marginBottom: 28, lineHeight: 1.55 }}>For teams that quote together. Shared services catalog and estimate history means everyone quotes consistently at your rates.</p>
-              <a href={SIGNUP_URL} rel="noopener noreferrer" style={{ display: "block", width: "100%", textAlign: "center", padding: "13px 0", fontSize: 15, fontWeight: 600, background: "transparent", color: MUTED, border: `1px solid ${BORDER}`, borderRadius: 8, textDecoration: "none", marginBottom: 28, fontFamily: FONT }}>Start agency trial</a>
+              <a href="https://calendly.com/revexos/scopetoquote" target="_blank" rel="noopener noreferrer" style={{ display: "block", width: "100%", textAlign: "center", padding: "13px 0", fontSize: 15, fontWeight: 600, background: "transparent", color: MUTED, border: `1px solid ${BORDER}`, borderRadius: 8, textDecoration: "none", marginBottom: 28, fontFamily: FONT }}>Book a meeting →</a>
               <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
                 {[
                   "Everything in Pro",
-                  "Up to 10 team members",
+                  "Unlimited team members",
                   "Shared services catalog across team",
                   "Shared estimate history",
                   "Team-level tax & payment defaults",
@@ -605,7 +600,6 @@ export default function ScopeToQuotePage() {
             </div>
           </div>
 
-          <p style={{ textAlign: "center", marginTop: 32, fontSize: 13, color: MUTED2 }}>All plans include unlimited estimate history. Cancel anytime from your dashboard — no emails required.</p>
         </div>
       </section>
 
@@ -645,10 +639,10 @@ export default function ScopeToQuotePage() {
             <h2 style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 800, lineHeight: 1.15, letterSpacing: "-0.03em", marginBottom: 16 }}>
               Send your next quote<br /><em style={{ fontStyle: "normal", color: GREEN }}>before your competition does.</em>
             </h2>
-            <p style={{ fontSize: 17, color: MUTED, marginBottom: 36 }}>Join agencies that have stopped rebuilding the same estimate from scratch every week. Your first 5 estimates are free — no credit card, no setup.</p>
+            <p style={{ fontSize: 17, color: MUTED, marginBottom: 36 }}>Join agencies that have stopped rebuilding the same estimate from scratch every week. Your first 10 estimates are free. No credit card, no setup.</p>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, flexWrap: "wrap" }}>
               <BtnPrimary href={SIGNUP_URL} lg>Start free now →</BtnPrimary>
-              <BtnGhost href="mailto:prabhu@scopetoquote.com" lg>Book a 15-min demo</BtnGhost>
+              <BtnGhost href="https://calendly.com/revexos/scopetoquote?month=2026-03" target="_blank" rel="noopener noreferrer" lg>Book Live Demo</BtnGhost>
             </div>
             <p style={{ fontSize: 13, color: MUTED2, marginTop: 18 }}>Free tier available permanently · Founding member price ($29/mo) closes at 50 customers</p>
           </div>

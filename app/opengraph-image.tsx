@@ -10,208 +10,193 @@ export default async function Image() {
     (
       <div
         style={{
-          background: "#0d0d0f",
+          background: "#111214",
           width: "100%",
           height: "100%",
           display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
           fontFamily: "sans-serif",
-          position: "relative",
+          padding: "36px 64px 32px",
+          gap: "0px",
           overflow: "hidden",
         }}
       >
-        {/* Purple glow top-left */}
-        <div
-          style={{
-            position: "absolute",
-            top: "-120px",
-            left: "-80px",
-            width: "500px",
-            height: "500px",
-            borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(99,102,241,0.25) 0%, transparent 70%)",
-            display: "flex",
-          }}
-        />
-
-        {/* Left column */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            padding: "56px 60px",
-            flex: 1,
-          }}
-        >
-          {/* Logo row */}
-          <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-            <div
-              style={{
-                width: "44px",
-                height: "44px",
-                borderRadius: "10px",
-                background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "24px",
-              }}
-            >
-              ⚡
-            </div>
-            <span style={{ color: "#e4e4e7", fontSize: "24px", fontWeight: 700, letterSpacing: "-0.3px" }}>
-              ScopeToQuote
-            </span>
-            <div
-              style={{
-                marginLeft: "8px",
-                background: "rgba(99,102,241,0.18)",
-                border: "1px solid rgba(99,102,241,0.45)",
-                borderRadius: "100px",
-                padding: "4px 14px",
-                color: "#a5b4fc",
-                fontSize: "14px",
-                display: "flex",
-              }}
-            >
-              Free Beta
-            </div>
-          </div>
-
-          {/* Headline */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-            <div
-              style={{
-                color: "#ffffff",
-                fontSize: "52px",
-                fontWeight: 800,
-                lineHeight: 1.05,
-                letterSpacing: "-1px",
-                maxWidth: "620px",
-              }}
-            >
-              Estimate faster with AI that knows your work.
-            </div>
-            <div
-              style={{
-                color: "#71717a",
-                fontSize: "22px",
-                lineHeight: 1.45,
-                maxWidth: "560px",
-              }}
-            >
-              Match new jobs to past estimates, extract line items from docs, and export pro PDFs — in seconds.
-            </div>
-          </div>
-
-          {/* Feature pills */}
-          <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-            {["AI similarity matching", "PDF & DOCX import", "Pro PDF export"].map((f) => (
-              <div
-                key={f}
-                style={{
-                  background: "rgba(255,255,255,0.06)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: "8px",
-                  padding: "8px 16px",
-                  color: "#a1a1aa",
-                  fontSize: "16px",
-                  display: "flex",
-                }}
-              >
-                {f}
-              </div>
-            ))}
-          </div>
+        {/* Logo row (no nav) */}
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "20px" }}>
+          <img
+            src="https://scopetoquote.com/logo.png"
+            width={32}
+            height={32}
+            style={{ borderRadius: "6px" }}
+          />
+          <span style={{ color: "#ffffff", fontSize: "20px", fontWeight: 700, display: "flex" }}>
+            ScopeToQuote
+          </span>
         </div>
 
-        {/* Right column — mock UI card */}
+        {/* Badge */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
-            paddingRight: "56px",
-            paddingTop: "56px",
-            paddingBottom: "56px",
+            gap: "8px",
+            background: "rgba(255,255,255,0.06)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            borderRadius: "100px",
+            padding: "5px 16px",
+            marginBottom: "16px",
           }}
         >
-          <div
+          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#4ade80", display: "flex" }} />
+          <span style={{ color: "#d4d4d8", fontSize: "14px", display: "flex" }}>Built for B2B service agencies &amp; consultants</span>
+        </div>
+
+        {/* Headline */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginBottom: "14px",
+            gap: "0px",
+          }}
+        >
+          <span
             style={{
-              width: "310px",
-              background: "#18181b",
-              border: "1px solid rgba(255,255,255,0.08)",
-              borderRadius: "16px",
-              padding: "28px",
+              color: "#ffffff",
+              fontSize: "54px",
+              fontWeight: 800,
+              letterSpacing: "-1.5px",
+              lineHeight: 1.05,
               display: "flex",
-              flexDirection: "column",
-              gap: "16px",
-              boxShadow: "0 0 60px rgba(99,102,241,0.15)",
             }}
           >
-            {/* Card header */}
+            Quote in minutes.
+          </span>
+          <span
+            style={{
+              color: "#4ade80",
+              fontSize: "54px",
+              fontWeight: 800,
+              letterSpacing: "-1.5px",
+              lineHeight: 1.05,
+              display: "flex",
+            }}
+          >
+            Close one more a month.
+          </span>
+        </div>
+
+        {/* Start for Free button */}
+        <div
+          style={{
+            background: "#4ade80",
+            borderRadius: "10px",
+            padding: "10px 28px",
+            color: "#0a0a0a",
+            fontSize: "16px",
+            fontWeight: 700,
+            display: "flex",
+            marginBottom: "24px",
+          }}
+        >
+          Start for Free
+        </div>
+
+        {/* Demo cards row */}
+        <div style={{ display: "flex", gap: "16px", alignItems: "center", width: "100%" }}>
+          {/* Left card: CLIENT SCOPE RECEIVED */}
+          <div
+            style={{
+              flex: 1,
+              background: "#1a1b1e",
+              border: "1px solid rgba(255,255,255,0.08)",
+              borderRadius: "12px",
+              padding: "16px 20px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+            }}
+          >
+            {/* Window dots + label */}
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <div style={{ display: "flex", gap: "5px" }}>
+                <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#ff5f57", display: "flex" }} />
+                <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#febc2e", display: "flex" }} />
+                <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#28c840", display: "flex" }} />
+              </div>
+              <span style={{ color: "#71717a", fontSize: "11px", fontWeight: 600, letterSpacing: "0.5px", display: "flex" }}>
+                CLIENT SCOPE RECEIVED
+              </span>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+              <span style={{ color: "#e4e4e7", fontSize: "13px", fontWeight: 700, display: "flex" }}>SCOPE 1: n8n Workflow Automation</span>
+              <span style={{ color: "#71717a", fontSize: "12px", display: "flex" }}>Setup &amp; Integration</span>
+              <div style={{ height: "1px", background: "rgba(255,255,255,0.06)", display: "flex", margin: "2px 0" }} />
+              <span style={{ color: "#71717a", fontSize: "11px", display: "flex" }}>Timeline: 4-6 weeks</span>
+              <span style={{ color: "#a1a1aa", fontSize: "11px", display: "flex" }}>OVERVIEW</span>
+              <span style={{ color: "#71717a", fontSize: "11px", lineHeight: 1.5, display: "flex" }}>
+                Client needs automation of onboarding, CRM sync, and invoice triggers via n8n...
+              </span>
+              <span style={{ color: "#a1a1aa", fontSize: "11px", marginTop: "4px", display: "flex" }}>DELIVERABLES</span>
+              <span style={{ color: "#71717a", fontSize: "11px", lineHeight: 1.6, display: "flex" }}>
+                - Cloud / self-hosted install{"\n"}- Up to 10 workflows{"\n"}- API connectors setup
+              </span>
+            </div>
+          </div>
+
+          {/* Arrow */}
+          <div style={{ color: "#4ade80", fontSize: "28px", display: "flex", flexShrink: 0 }}>→</div>
+
+          {/* Right card: ESTIMATE GENERATED */}
+          <div
+            style={{
+              flex: 1,
+              background: "#1a1b1e",
+              border: "1px solid rgba(255,255,255,0.08)",
+              borderRadius: "12px",
+              padding: "16px 20px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+            }}
+          >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ color: "#e4e4e7", fontSize: "15px", fontWeight: 600, display: "flex" }}>New Estimate</span>
+              <span style={{ color: "#71717a", fontSize: "11px", fontWeight: 600, letterSpacing: "0.5px", display: "flex" }}>
+                ESTIMATE GENERATED
+              </span>
               <div
                 style={{
-                  background: "rgba(99,102,241,0.2)",
-                  borderRadius: "6px",
-                  padding: "4px 10px",
-                  color: "#a5b4fc",
-                  fontSize: "13px",
+                  background: "rgba(74,222,128,0.15)",
+                  border: "1px solid rgba(74,222,128,0.3)",
+                  borderRadius: "100px",
+                  padding: "3px 10px",
+                  color: "#4ade80",
+                  fontSize: "11px",
+                  fontWeight: 600,
                   display: "flex",
                 }}
               >
-                AI
+                + 87% MATCH
               </div>
             </div>
-
-            {/* Line items */}
             {[
-              { label: "Site Assessment", amount: "$450" },
-              { label: "Equipment Install", amount: "$2,100" },
-              { label: "Labor (16 hrs)", amount: "$1,280" },
-            ].map((item) => (
-              <div
-                key={item.label}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  background: "rgba(255,255,255,0.04)",
-                  borderRadius: "8px",
-                  padding: "10px 14px",
-                }}
-              >
-                <span style={{ color: "#a1a1aa", fontSize: "14px", display: "flex" }}>{item.label}</span>
-                <span style={{ color: "#e4e4e7", fontSize: "14px", fontWeight: 600, display: "flex" }}>{item.amount}</span>
+              ["n8n Cloud / Self-Hosted Install & Config", "$1,200"],
+              ["Workflow Design & Build (up to 10)", "$4,500"],
+              ["API Integration & Connector Setup", "$2,000"],
+              ["Error Handling & Activity Logging", "$800"],
+              ["Admin Training & Documentation", "$700"],
+            ].map(([label, amt]) => (
+              <div key={label} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span style={{ color: "#a1a1aa", fontSize: "12px", display: "flex" }}>{label}</span>
+                <span style={{ color: "#4ade80", fontSize: "12px", fontWeight: 600, display: "flex" }}>{amt}</span>
               </div>
             ))}
-
-            {/* Divider */}
-            <div style={{ height: "1px", background: "rgba(255,255,255,0.07)", display: "flex" }} />
-
-            {/* Total */}
+            <div style={{ height: "1px", background: "rgba(255,255,255,0.06)", display: "flex" }} />
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ color: "#71717a", fontSize: "14px", display: "flex" }}>Total</span>
-              <span style={{ color: "#ffffff", fontSize: "20px", fontWeight: 800, display: "flex" }}>$3,830</span>
-            </div>
-
-            {/* Export button */}
-            <div
-              style={{
-                background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
-                borderRadius: "10px",
-                padding: "12px",
-                textAlign: "center",
-                color: "#ffffff",
-                fontSize: "14px",
-                fontWeight: 600,
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              Export PDF
+              <span style={{ color: "#e4e4e7", fontSize: "14px", fontWeight: 700, display: "flex" }}>Total</span>
+              <span style={{ color: "#4ade80", fontSize: "20px", fontWeight: 800, display: "flex" }}>$9,800</span>
             </div>
           </div>
         </div>

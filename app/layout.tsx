@@ -26,13 +26,13 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: "ScopeToQuote",
     type: "website",
-    images: [{ url: "/logo.png", width: 1080, height: 1080, alt: "ScopeToQuote logo" }],
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "ScopeToQuote: AI-Powered Estimating for Service Businesses" }],
   },
   twitter: {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
-    images: ["/logo.png"],
+    images: ["/opengraph-image"],
   },
 };
 

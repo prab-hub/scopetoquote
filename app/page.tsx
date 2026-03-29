@@ -688,7 +688,7 @@ export default function ScopeToQuotePage() {
                 prabhu@scopetoquote.com
               </a>
               <a
-                href="https://x.com/prab-hub"
+                href="https://x.com/prab_hub"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ fontSize: 13, color: "#6b7280", textDecoration: "none", display: "flex", alignItems: "center", gap: 6 }}

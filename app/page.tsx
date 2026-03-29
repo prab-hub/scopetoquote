@@ -650,19 +650,70 @@ export default function ScopeToQuotePage() {
       </section>
 
       {/* ── FOOTER ───────────────────────────────────────────────── */}
-      <footer style={{ backgroundColor: "#0F1115", borderTop: `1px solid #1f2937`, padding: "48px 0" }}>
+      <footer style={{ backgroundColor: "#0F1115", borderTop: `1px solid #1f2937`, padding: "56px 0 32px" }}>
         <div style={container}>
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 24 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <Image src="/logo.png" alt="ScopeToQuote" width={48} height={48} style={{ borderRadius: 9 }} />
-              <span style={{ color: "#fff", fontWeight: 800, fontSize: 18, letterSpacing: "-0.03em", fontFamily: FONT }}>ScopeToQuote</span>
+          {/* Top row: brand | contact | legal */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 48, justifyContent: "space-between", marginBottom: 40 }}>
+
+            {/* Brand column */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 12, minWidth: 200 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <Image src="/logo.png" alt="ScopeToQuote" width={40} height={40} style={{ borderRadius: 8 }} />
+                <span style={{ color: "#fff", fontWeight: 800, fontSize: 17, letterSpacing: "-0.03em", fontFamily: FONT }}>ScopeToQuote</span>
+              </div>
+              <p style={{ fontSize: 12, color: "#6b7280", margin: 0, lineHeight: 1.5 }}>
+                AI-powered estimating for freelancers<br />and agencies.
+              </p>
+              <p style={{ fontSize: 12, color: "#4b5563", margin: 0 }}>
+                Built by{" "}
+                <a
+                  href="https://revexos.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "#6b7280", textDecoration: "underline", textUnderlineOffset: 3 }}
+                >
+                  RevExOS
+                </a>
+                {" "}&mdash; 100+ Automation Projects Completed
+              </p>
             </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 24, flexWrap: "wrap" }}>
-              <span style={{ fontSize: 13, color: "#6b7280" }}>prabhu@scopetoquote.com</span>
+
+            {/* Contact column */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, minWidth: 160 }}>
+              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "#9ca3af", margin: 0 }}>Contact</p>
+              <a
+                href="mailto:prabhu@scopetoquote.com"
+                style={{ fontSize: 13, color: "#6b7280", textDecoration: "none", display: "flex", alignItems: "center", gap: 6 }}
+              >
+                prabhu@scopetoquote.com
+              </a>
+              <a
+                href="https://x.com/prab-hub"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ fontSize: 13, color: "#6b7280", textDecoration: "none", display: "flex", alignItems: "center", gap: 6 }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.631 5.905-5.631Zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+                Follow us on X
+              </a>
+            </div>
+
+            {/* Legal column */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, minWidth: 140 }}>
+              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "#9ca3af", margin: 0 }}>Legal</p>
               <a href="/privacy" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>Privacy Policy</a>
               <a href="/tos" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>Terms of Service</a>
             </div>
-            <p style={{ fontSize: 13, color: "#6b7280" }}>© {new Date().getFullYear()} ScopeToQuote. All rights reserved.</p>
+
+          </div>
+
+          {/* Bottom row: copyright */}
+          <div style={{ borderTop: "1px solid #1f2937", paddingTop: 24, display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
+            <p style={{ fontSize: 12, color: "#4b5563", margin: 0 }}>
+              &copy; {new Date().getFullYear()} ScopeToQuote. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>
